@@ -1,0 +1,139 @@
+.instructor-section {
+    padding: 100px 20px;
+}
+.instructor-section-headingbox {
+    background-image: url(https://demo.themeum.com/tutor/wp-content/plugins/tutor/assets/images/cover-photo.jpg);
+    height: 350px;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+}
+.instructor-section-info-box {
+    text-align: center;
+    padding-top: 250px;
+}
+.instructor-section-info-box2 {
+    display: grid;
+    place-items: center;
+}
+.info-box-avatar {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    border: 8px solid white;
+}
+.info-box-avatar-image {
+    width: 129px;
+    height: 129px;
+    border-radius: 50%;
+}
+.instructor-section-list-card-heading {
+    font-weight: 500;
+    font-size: 22px;
+    color: #677BA2;
+}
+.instructor-section-list-card-subheading {
+    margin: 40px 0;
+    font-size: 18px;
+    line-height: 28px;
+}
+.instructor-section-list-card2 {
+    display: grid;
+    place-items: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+.instructor-section-list-card {
+    margin-top: 200px;
+}
+.info-box-star-box {
+    display: flex;
+    gap: 5px;
+}
+.info-box-star-box {
+    color: #ED9700;
+}
+.info-box-name-heading {
+    font-size: 28px;
+}
+.info-box-star-box p {
+    color: black;
+}
+.info-box-social-box2 {
+    margin-top: 35px;
+    gap: 15px;
+}
+.info-box-name-subheading {
+    margin: 15px 0;
+}
+.info-box-social-box2 {
+    display: flex;
+    margin-top: 15px;
+    gap: 15px;
+    justify-content: center;
+}
+.info-box-social-box2 i{
+    font-size: 22px;
+}
+
+@media (min-width: 768px) {
+    .instructor-section {
+        padding: 100px 50px;
+    }
+    .instructor-section-headingbox {
+        display: block;
+    }
+    .info-box-name-heading {
+        font-weight: 800;
+        font-size: 36px;
+        color: white;
+    }    
+    .info-box-name-subheading {
+        color: white;
+        margin-top: 20px;
+    }
+    
+    .info-box-star-box p {
+        color: white;
+    }
+    .info-box-social-box2 {
+        
+        display: flex;
+        justify-content: end;
+        margin-top: 35px;
+        gap: 15px;
+    }
+    .info-box-social-box2 i {
+        font-size: 22px;
+        color: white;
+    }
+    .instructor-section-info-box {
+        padding: 0 30px;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 250px;
+    }
+    .instructor-section-info-box2 {
+        display: flex;
+    }
+    .info-box-name {
+        margin-left: 20px;
+        margin-bottom: 70px;
+    }
+    .instructor-section-list-card {
+        margin: 0;
+        padding: 100px 100px 0 100px;
+    }
+    .instructor-section-list-card2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1025px) {
+    .instructor-section {
+        padding: 100px 165px;
+    }
+    .instructor-section-list-card2 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+}

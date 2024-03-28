@@ -1,0 +1,71 @@
+.lesson-section {
+    display: grid;
+}
+.lesson-section-headingbox {
+    padding: 35px;
+}
+.lesson-section-heading {
+    font-size: 18px;
+    font-weight: 500;
+}
+.lesson-section-videobox-heading {
+    display: flex;
+    align-items: center;
+
+}
+.lesson-section-headingbox-left {
+    display: none;
+}
+.lesson-section-videobox {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    background-color: var(--color-primary);
+}
+.lesson-section-videobox i {
+    font-size: 18px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: rgb(90, 90, 192);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.lesson-section-videobox i:hover {
+    color: var(--color-primary);
+    background-color: white;
+}
+.lesson-section-videobox-heading h2 {
+    margin-left: 10px;
+    color: white;
+}
+.lesson-section-video {
+    height: 650px;
+    background-color: black;
+    grid-column: 1 / 5;
+}
+.lesson-section-videobox {
+    grid-column: 1 / 5;
+}
+@media (min-width: 768px) {
+    .lesson-section {
+        grid-template-columns: repeat(4, 1fr);
+       
+    }
+    .lesson-section-headingbox-left {
+        display: block;
+    }
+    .lesson-section-videobox {
+        grid-column: 2 / 5;
+    }
+    .lesson-section-video {
+        grid-column: 2 / 5;
+    }
+}
+@media (min-width: 1025px) {
+    
+}

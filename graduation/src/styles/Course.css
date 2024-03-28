@@ -1,0 +1,87 @@
+.course-section {
+    padding: 50px 10px;
+}
+.course-section-search-find-box-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    padding: 10px;
+    border: 0.5px solid gray;
+    border-radius: 5px;
+    width: 220px;
+    max-width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+}
+.course-section-search-find-box-input-button {
+    background: none;
+    border: none;
+    outline: none;
+    margin-left: 10px;
+}
+.find-button {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.course-section-content {
+    margin-top: 20px;
+}
+.course-section-content-checked-heading {
+    font-size: 22px;
+    font-weight: 500;
+    color: #677BA2;
+    margin-bottom: 30px;
+}
+.course-section-content-checked-box {
+   display: flex;
+   align-items: center;
+}
+.course-section-content-checked-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}
+.course-section-content-checked-subheading {
+    color: #677BA2;
+}
+.course-section-content-checked {
+    margin-top: 60px;
+}
+.course-section-content {
+    display: flex;
+    justify-content: space-between;
+}
+.course-section-content-list-card {
+    margin-top: 50px;
+    display: grid;
+    gap: 40px;
+    place-items: center;
+}
+@media (min-width: 768px) {
+    .course-section {
+        padding: 100px 50px;
+    }
+    .course-section-search-find-box {
+        display: flex;
+        justify-content: space-between;
+    }
+    .course-section-content-list-card {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .find-button {
+        margin: 0;
+    }
+ }
+
+ @media (min-width: 1025px) {
+    .course-section {
+        padding: 100px 150px;
+    }
+    .course-section-content-list-card {
+        grid-template-columns: repeat(3, 1fr);
+    }
+ }
+
+
