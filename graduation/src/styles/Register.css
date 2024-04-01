@@ -1,0 +1,17 @@
+.otp-form {
+    text-align: center;
+}
+.otp-form h2 {
+    margin-bottom: 20px;
+}
+.otp-input {
+    text-align: center;
+    font-weight: 600;
+    width: 40px !important;
+    margin: 30px 10px;
+    gap: 20px;
+}
+.otp-input-box a {
+    color: black !important;
+    font-size: 16px;
+}

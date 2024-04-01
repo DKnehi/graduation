@@ -8,6 +8,9 @@ import reportWebVitals from './reportWebVitals';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Lesson from './components/Lesson';
+import NewCourse from './components/NewCourse';
+import Login from './components/Login';
+import Register from './components/Register';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,6 +22,9 @@ root.render(
       <Route path='/course' element={<Course />}></Route>
       <Route path='/instructor' element={<Instructor />}></Route>
       <Route path='/lesson' element={<Lesson />}></Route>
+      <Route path='/newcourse' element={<NewCourse />}></Route>
+      <Route path='/login' element={<Login />}></Route>
+      <Route path='/register' element={<Register />}></Route>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

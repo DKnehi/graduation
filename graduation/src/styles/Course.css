@@ -59,6 +59,9 @@
     gap: 40px;
     place-items: center;
 }
+.course-section-content-listchecked {
+    margin-right: 50px;
+}
 @media (min-width: 768px) {
     .course-section {
         padding: 100px 50px;

@@ -6,6 +6,9 @@
 @import url(./Instructor.css);
 @import url(./CourseCard.css);
 @import url(./Lesson.css);
+@import url(./NewCourse.css);
+@import url(./Register.css);
+@import url(./Login.css);
 @import url(./Footer.css);
 
 body {
@@ -23,4 +26,5 @@ code {
 }
 :root {
   --color-primary:  #246BFD;
+  --color-second:#677BA2;
 }

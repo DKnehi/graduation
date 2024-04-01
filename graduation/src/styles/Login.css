@@ -1,0 +1,121 @@
+.login-section {
+    display: grid;
+
+}
+.login-content-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: left;
+    padding: 0 180px;
+}
+.login-content-box h2 {
+    font-size: 38px;
+    font-weight: 400;
+}
+.login-content-box-subheading {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    line-height: 25px;
+    color: gray;
+}
+.login-slide-box {
+    height: 783px;
+    background-color: var(--color-primary);
+}
+.login-content-box-button-name {
+    display: flex;
+    align-items: center;
+}
+.login-content-box-button-name p {
+    margin-left: 15px;
+    font-size: 18px;
+}
+.login-content-box-button-name span {
+    font-size: 20px;
+    font-weight: 550;
+}
+.login-content-box-button {
+    display: flex;
+    align-items: center;
+    width: 363px;
+    max-width: 100%;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border: 1px solid gray;
+    border-radius: 50px;
+    background: none;
+    cursor: pointer;
+    margin-top: 30px;
+
+}
+.login-content-box-button-arrow {
+    width: 46px;
+    height: 46px;
+    background-color: #F5F7FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.login-content-box-button:hover{
+    border: 1px solid var(--color-primary);
+}
+.login-content-box-button:hover .login-content-box-button-arrow{
+    background-color: var(--color-primary);
+}
+.login-content-box-button:hover i {
+    color: white;
+}
+
+.login-form {
+    background: none;
+    border: 1px solid var(--color-primary);
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 20px;
+}
+.login-form input {
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0 10px;
+    outline: none;
+
+}
+.login-form button {
+    padding: 15px 35px;
+    background-color: #F5F7FD;
+    border: none;
+    border-radius: 5px;
+    font-weight: 550;
+    font-size: 17px;
+    cursor: pointer;
+}
+.login-form button:hover {
+    color: white;
+    background-color: var(--color-primary);
+}
+.login-form a {
+    font-size: 18px;
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+@media (min-width: 768px) {
+    .login-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+}
+@media (min-width: 1024px) {
+
+}
