@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 export default function () {
   return (
     <div>
-        <Header></Header>
         <section className='lesson-section'>
             <div className='lesson-section-headingbox-left'>
                 <div className='lesson-section-headingbox'>
@@ -31,7 +30,6 @@ export default function () {
                     
                 </div>
         </section>
-        <Footer></Footer>
     </div>
   )
 }

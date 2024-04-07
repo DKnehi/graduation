@@ -25,13 +25,13 @@ export default function Header() {
                     <div className="menu">
                         <ul className='menu-list'>
                             <li>
-                                <Link to='/' className='menu-item' href="">Overview</Link>
+                                <Link to='/' className='menu-item' href="">Trang chủ</Link>
                             </li>
                             <li>
-                                <Link to="/course" className='menu-item' href="">Courses</Link>
+                                <Link to="/course" className='menu-item' href="">Khóa học</Link>
                             </li>
                             <li>
-                                <a className='menu-item' href="">Course Details</a>
+                                <a className='menu-item' href="">Chi tiết khóa học</a>
                             </li>
                             <li>
                                 <Link to='/instructor' className='menu-item' href="">Instructor</Link>
@@ -125,7 +125,7 @@ export default function Header() {
                 <div className='header-login-click'>
                     <p>Want to Explore!</p>
                     <Link to='/login'>
-                    <a href="">Instant Login</a>
+                    Đăng nhập
                     </Link>
                 </div>
 
