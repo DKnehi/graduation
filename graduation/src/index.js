@@ -1,32 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './styles/index.css'; 
-import App from './components/App';
-import Course from './components/Course';
-import Instructor from './components/Instructor';
-import reportWebVitals from './reportWebVitals';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Lesson from './components/Lesson';
-import NewCourse from './components/NewCourse';
-import Login from './components/Login';
-import Register from './components/Register';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
+import App from "./App";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import reportWebVitals from "./reportWebVitals";
+
+import { StateProvider } from "./Context/StateProvider";
+import { initialState } from "./Context/initalState";
+import reducer from "./Context/reducer";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<App />}></Route>
-      <Route path='/course' element={<Course />}></Route>
-      <Route path='/instructor' element={<Instructor />}></Route>
-      <Route path='/lesson' element={<Lesson />}></Route>
-      <Route path='/newcourse' element={<NewCourse />}></Route>
-      <Route path='/login' element={<Login />}></Route>
-      <Route path='/register' element={<Register />}></Route>
-    </Routes>
-    </BrowserRouter>
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <App />
+    </StateProvider>
   </React.StrictMode>
 );
 
