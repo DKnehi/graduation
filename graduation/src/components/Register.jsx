@@ -170,10 +170,10 @@ export default function Register() {
                   />
                 ))}
               </div> */}
-              <input type="text" onChange={(e)=>setotpString(e.target.value)} />
-              <div style={{ color: "blue" }} onClick={handleSubmit}>
+              <input type="text" placeholder="Nhập mã OTP" onChange={(e)=>setotpString(e.target.value)} />
+              <p style={{ color: "blue" }} onClick={handleSubmit}>
                 Resend code
-              </div>
+              </p>
               <button type="">Đăng ký</button>
             </form>
           )}

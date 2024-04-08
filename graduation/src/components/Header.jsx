@@ -23,20 +23,8 @@ export default function Header() {
                         <div className="buger-icon buger-icon3"></div>
                     </div>
                     <div className="menu">
-                        <ul className='menu-list'>
-                            <li>
-                                <Link to='/' className='menu-item' href="">Trang chủ</Link>
-                            </li>
-                            <li>
-                                <Link to="/course" className='menu-item' href="">Khóa học</Link>
-                            </li>
-                            <li>
-                                <a className='menu-item' href="">Chi tiết khóa học</a>
-                            </li>
-                            <li>
-                                <Link to='/instructor' className='menu-item' href="">Instructor</Link>
-                            </li>
-                        </ul>
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder='Tìm kiếm khóa học, bài viết, video,...' name="" id="" />
                     </div>
                 </nav>
                 {/* <div className="header-avatar-box"

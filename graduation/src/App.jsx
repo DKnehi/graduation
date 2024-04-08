@@ -10,13 +10,17 @@ import Main from "./components/Main"
 import Course from "./components/Courses/Course";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Instructor from "./components/instructor/Instructor";
+import Cart from "./components/Cart";
 
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
+  { path: "/instructor", component: Instructor },
 
   { path: "/login", component: Login },
   { path: "/register", component: Register },
+  { path: "/cart", component: Cart },
 ];
 
 function App() {

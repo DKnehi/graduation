@@ -27,6 +27,8 @@
 }
 .course-section-content {
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 .course-section-content-checked-heading {
     font-size: 22px;
@@ -49,10 +51,7 @@
 .course-section-content-checked {
     margin-top: 60px;
 }
-.course-section-content {
-    display: flex;
-    justify-content: space-between;
-}
+
 .course-section-content-list-card {
     margin-top: 50px;
     display: grid;
@@ -60,8 +59,39 @@
     place-items: center;
 }
 .course-section-content-listchecked {
-    margin-right: 50px;
+    /* margin-right: 50px; */
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+  
+  button {
+    border: none;
+    background-color: transparent;
+    color: #333;
+    padding: 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  button.active {
+    font-weight: bold;
+    color: #fff;
+    background-color: var(--color-primary);
+    border-radius: 4px;
+  }
+  
+  button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+ 
 @media (min-width: 768px) {
     .course-section {
         padding: 100px 50px;
@@ -76,6 +106,9 @@
     .find-button {
         margin: 0;
     }
+    .course-section-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
  }
 
  @media (min-width: 1025px) {
@@ -84,6 +117,10 @@
     }
     .course-section-content-list-card {
         grid-template-columns: repeat(3, 1fr);
+    }
+    .app-container {
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
     }
  }
 
