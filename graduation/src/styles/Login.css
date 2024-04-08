@@ -21,7 +21,7 @@
     color: gray;
 }
 .login-slide-box {
-    height: 783px;
+    height: auto;
     background-color: var(--color-primary);
 }
 .login-content-box-button-name {

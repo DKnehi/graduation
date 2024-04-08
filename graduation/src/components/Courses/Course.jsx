@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import CourseCard from "./CourseCard";
-
+import Pagination from '../Pagination';
 export default function () {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 100; // Tổng số trang
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Thực hiện các thao tác khác khi trang thay đổi, ví dụ: fetch dữ liệu mới từ API
+  };
   return (
     <div>
       <section className="course-section">
@@ -80,10 +87,20 @@ export default function () {
               </span>
             </div>
           </div>
-          <div className="course-section-content-list-card">
-            <CourseCard></CourseCard>
-            <CourseCard></CourseCard>
-            <CourseCard></CourseCard>
+
+          <div className="app-container">
+            {/* Hiển thị danh sách các item trên trang */}
+            <div className="item-list">
+              {`Hiển thị danh sách item của trang ${currentPage}`}
+              {/* Thực hiện hiển thị dữ liệu của trang tại đây */}
+              <div className="course-section-content-list-card">
+                <CourseCard></CourseCard>
+                <CourseCard></CourseCard>
+                <CourseCard></CourseCard>
+              </div>
+            </div>
+            {/* Hiển thị component phân trang */}
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         </div>
       </section>

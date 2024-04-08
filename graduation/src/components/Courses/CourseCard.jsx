@@ -29,9 +29,12 @@ export default function
             <div className='discover-courses-section-card-content-box-avatar'>
               <img className='discover-courses-section-card-content-box-avatar-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5-150x150.jpg" alt="" />
             </div>
+            <Link to='/instructor'>
             <span>
               By <a href="">Sophia Jaymes</a>
             </span>
+            </Link>
+            
           </div>
         </div>
         <div className='course-card-buttonbox'>

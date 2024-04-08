@@ -1,0 +1,131 @@
+.cart-section {
+    display: grid;
+    padding: 30px 20px;
+    gap: 30px;
+}
+.cart-content-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.cart-content-card {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.08);
+    border-radius: 8px;
+}
+.cart-content-card-price {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cart-content-card-price-remove {
+    font-size: 18px;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+.cart-content-card-imgbox {
+    display: flex;
+    align-items: center;
+}
+.cart-content-card-imgbox img{
+    border-radius: 8px;
+    max-width: 100%;
+}
+.cart-content-card-imgbox p{
+    font-size: 18px;
+    margin-left: 15px;
+    font-weight: 600;
+}
+.cart-section h2 {
+    font-size: 22px;
+    color: var(--color-second);
+    margin-bottom: 30px;
+}
+.summary-box {
+    padding: 30px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border-radius: 15px;
+}
+.summary-box button {
+    width: 100%;
+    background-color: var(--color-primary);
+    border-radius: 50px;
+    height: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+}
+.summary-box button:hover {
+    background-color: darkmagenta;
+}
+.vnpay-checkout {
+    background-color: white !important;
+    border: 1px solid black;
+    margin-top: 30px;
+}
+.vnpay-checkout:hover {
+    border: 1px solid var(--color-primary);
+} 
+.vnpay-checkout img {
+    height: 30px;
+}
+.summary-box p{
+    font-weight: 550;
+    font-size: 16px;
+}
+.summary-first {
+    display: flex;
+    justify-content: space-between;
+}
+.summary-third-price {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+}
+.summary-second {
+    display: flex;
+    justify-content: space-between;
+    border-top: 0.5px solid gray;
+    border-bottom: 0.5px solid gray;
+    padding: 30px 0;
+}
+.summary-second a{
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+.summary-second-sub {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.summary-second-sub p{
+    line-height: 20px;
+}
+.summary-third {
+    display: flex;
+    justify-content: space-between;
+}
+@media (min-width: 768px) {
+    .cart-section {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 100px 50px;
+    }
+    .cart-content {
+        grid-column: 1/3;
+    }
+    .cart-content-card {
+        padding: 30px;
+    }
+}
+
+
+@media (min-width: 1024px) {
+
+}
