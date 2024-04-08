@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import useCustomNavigate from "../utils/useCustomNavigate";
+
 const baseURL = "http://52.221.211.77:3000";
 
 const axiosClient = axios.create({
@@ -35,25 +36,20 @@ export const getCourseType = async (idCourseType) => {
 // ------------------------------ login--------------------------------
 
 export const Login = {
+  
   login: (user_email, user_password) => {
     const data = { user_email, user_password };
     const url = `/v1/api/user/login`;
     return axiosClient.post(url, data);
   },
 };
-
-// Hàm chuyển hướng đến trang đăng nhập
-const redirectToLogin = () => {
-  const navigate = useNavigate();
-  navigate("/login");
-};
-
 // Thêm interceptor cho response
 axiosClient.interceptors.response.use(
   (response) => response.data,
   async (error) => {
     if (error.response.status === 401) {
       // Nếu access token hết hạn, chuyển hướng đến trang đăng nhập
+      const redirectToLogin = useCustomNavigate();
       redirectToLogin();
     }
     return Promise.reject(error);
@@ -87,14 +83,14 @@ export const activateUser = async (otpCode, activationToken) => {
 
 // ---------------getallcourses---------------
 
-export const getAllCourses = async () => {
-  // console.log(idOneCourse);
+// export const getAllCourses = async () => {
+//   // console.log(idOneCourse);
   
-  try {
-    const url = "/v1/api/course?limit=0&page=1";
-    console.log(req);
-    return req.data;
-  } catch (error) {
-    return null;
-  }
-};
+//   try {
+//     const url = "/v1/api/course?limit=0&page=1";
+//     console.log(req);
+//     return req.data;
+//   } catch (error) {
+//     return null;
+//   }
+// };

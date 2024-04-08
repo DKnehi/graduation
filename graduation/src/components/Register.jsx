@@ -7,13 +7,8 @@ export default function Register() {
   const [showUserRegisterForm, setShowUserRegisterForm] = useState(false);
   const [showInstructorRegisterForm, setShowInstructorRegisterForm] =
     useState(false);
-  const [showOTPCode, setShowOTPCode] = useState(false);
-
-  const handleButtonClick = () => {
-    setShowOTPCode(true);
-    setButtonText("Verify");
-  };
-
+  const [showOTPCode, setShowOTPCode] = useState(true);
+// không gửi đc dữ liệu sẽ bị lỗi, nên thay đổi bật tắt thủ công
   const handleUserRegisterClick = () => {
     setShowUserRegisterForm((prev) => !prev);
     setShowInstructorRegisterForm(false);
@@ -47,8 +42,8 @@ export default function Register() {
   //   console.log(otpString);
   // };
 
-  // Số ký tự tối đa được nhập vào
-  const maxLength = 1;
+
+
   // -----------------------------------------------------------------------
   const [name, setName] = useState();
   const [email, setEmail] = useState();
