@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { activateUser, register } from "../api";
+import { activateUser, register } from "../../../api";
 
 import { toast, ToastContainer } from "react-toastify";
 export default function Register() {
   const [showUserRegisterForm, setShowUserRegisterForm] = useState(false);
   const [showInstructorRegisterForm, setShowInstructorRegisterForm] =
     useState(false);
-  const [showOTPCode, setShowOTPCode] = useState(true);
+  const [showOTPCode, setShowOTPCode] = useState(false);
 // không gửi đc dữ liệu sẽ bị lỗi, nên thay đổi bật tắt thủ công
   const handleUserRegisterClick = () => {
     setShowUserRegisterForm((prev) => !prev);
@@ -19,28 +19,9 @@ export default function Register() {
     setShowUserRegisterForm(false);
   };
 
-  // const [otpValues, setOTPValues] = useState(["", "", "", ""]);
+
   const [otpString, setotpString] = useState();
-  // const handleChange = (index, event) => {
-  //   const value = event.target.value;
 
-  //   // Kiểm tra nếu giá trị nhập vào không phải là số hoặc độ dài vượt quá 1 ký tự thì không cập nhật
-  //   if (!/^\d*$/.test(value) || value.length > 1) {
-  //     return;
-  //   }
-
-  //   // Cập nhật giá trị của input
-  //   const newOTPValues = [...otpValues];
-  //   newOTPValues[index] = value;
-  //   setOTPValues(newOTPValues);
-
-  //   // Nếu có giá trị mới và không phải là ô cuối cùng thì focus ô tiếp theo
-  //   if (value && index < 3) {
-  //     document.getElementById(`otpInput${index + 1}`).focus();
-  //   }
-  //   setotpString(newOTPValues.join(""));
-  //   console.log(otpString);
-  // };
 
 
 
@@ -52,7 +33,8 @@ export default function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    register(name, email, pass).then((data) => {
+    try {
+      register(name, email, pass).then((data) => {
       if (data.code === 201) {
         console.log(data);
       setShowOTPCode(true);
@@ -69,6 +51,10 @@ export default function Register() {
       else console.log("tk da ton tai");
       
     });
+    } catch (error) {
+      
+    }
+    
   };
   // console.log(otpValues);
   const navigate = useNavigate();
