@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Login as loginApi } from "../api/index";
+import { Login as loginApi } from "../../../api/index";
 
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
   const [prevPath, setPrevPath] = useState(location.state?.from || "/");
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Ngăn chặn việc tải lại trang khi submit form
+    event.preventDefault(); 
     try {
       const res = await loginApi.login(username, password);
       console.log(res);

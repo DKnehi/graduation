@@ -10,28 +10,7 @@ const axiosClient = axios.create({
   },
 });
 
-export const getOneCourse = async (idOneCourse) => {
-  // console.log(idOneCourse);
-  try {
-    const req = await axios.get(
-      `${baseURL}/v1/api/course/get-one-course/learn/${idOneCourse}`
-    );
-    // console.log(req);
-    return req.data;
-  } catch (error) {
-    return null;
-  }
-};
-export const getCourseType = async (idCourseType) => {
-  try {
-    const req = await axios.get(
-      `${baseURL}/v1/api/course/get-one-course/${idCourseType}`
-    );
-    return req;
-  } catch (error) {
-    return null;
-  }
-};
+
 
 // ------------------------------ login--------------------------------
 
@@ -81,16 +60,28 @@ export const activateUser = async (otpCode, activationToken) => {
   }
 };
 
-// ---------------getallcourses---------------
+// ---------------getcourses---------------
 
-// export const getAllCourses = async () => {
-//   // console.log(idOneCourse);
-  
-//   try {
-//     const url = "/v1/api/course?limit=0&page=1";
-//     console.log(req);
-//     return req.data;
-//   } catch (error) {
-//     return null;
-//   }
-// };
+export const getOneCourse = async (idOneCourse) => {
+  // console.log(idOneCourse);
+  try {
+    const res = await axios.get(
+      `${baseURL}/v1/api/course/get-one-course/${idOneCourse}`
+    );
+    // console.log(res);
+    return res.data;
+  } catch (error) {
+    return null;
+  }
+};
+//----------------autoCall api-------------
+export const getCourseType = async () => {
+  try {
+    const res = await axios.get(`${baseURL}/v1/api/course/get-all-course-type`);
+    // console.log(res);
+    return res;
+  } catch (error) {
+    return null;
+  }
+};
+

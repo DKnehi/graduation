@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CourseCard from "./CourseCard";
-import Pagination from '../Pagination';
+import Pagination from './Pagination';
 export default function () {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 100; // Tổng số trang
