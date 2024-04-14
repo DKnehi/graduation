@@ -18,14 +18,13 @@ import Cart from "./components/Cart";
 import NewCourse from "./components/CourseDetails/NewCourse";
 import Lesson from "./components/Lesson";
 
-
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
   { path: "/instructor", component: Instructor },
 
-  { path: "/login", component: Login },
-  { path: "/register", component: Register },
+  { path: "/login", component: Login, layout: null },
+  { path: "/register", component: Register, layout: null },
   { path: "/cart", component: Cart },
 
   { path: "/newcourse", component: NewCourse },
@@ -45,7 +44,6 @@ function App() {
         type: actionType.SET_TYPECOURSE,
         typeCourse: res.data.data,
       });
-
     } catch (error) {
       // console.error("Error fetching course type:", error);
     }
