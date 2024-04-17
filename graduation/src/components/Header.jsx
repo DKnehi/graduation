@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Input, Space } from "antd";
-import { useStateValue } from "../Context/StateProvider";
-import { actionType } from "../Context/reducer";
-const { Search } = Input;
+import { Link, NavLink } from "react-router-dom";
 export default function Header() {
-  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [stateLogin, setstateLogin] = useState(false);
   const [dataUser, setDataUser] = useState(null);
-  const [{ search }, dispatch] = useStateValue();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -26,13 +20,7 @@ export default function Header() {
       setstateLogin(true);
     }
   }, []);
-  //   console.log(dataUser);
-  const onSearch = (value) => {
-    dispatch({ type: actionType.SET_SEARCH, search: value });
-    navigate(`/course`);
-    // console.log(value);
-  };
-
+//   console.log(dataUser);
   return (
     <div>
       <header className="header">
@@ -49,19 +37,12 @@ export default function Header() {
             <div className="buger-icon buger-icon3"></div>
           </div>
           <div className="menu">
-            {/* <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
               placeholder="Tìm kiếm khóa học, bài viết, video,..."
               name=""
               id=""
-            /> */}
-            <Search
-              placeholder="Tìm kiếm khóa học, bài viết, video,..."
-              allowClear
-              enterButton="Tìm kiếm"
-              size="large"
-              onSearch={onSearch}
             />
           </div>
         </nav>
