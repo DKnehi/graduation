@@ -6,20 +6,22 @@ import { useStateValue } from "../../Context/StateProvider";
 import ReactPlayer from "react-player";
 import { convertToTime } from "../../utils/convertToTime";
 export default function () {
-  const [idOneCourse, setidOneCourse] = useState("65d89f2602fed4ae3c6d5375");
-  const [{ typeCourse }, dispatch] = useStateValue();
+  const [{ typeCourse, idCourseCard }, dispatch] = useStateValue();
+  console.log('====================================');
+  console.log(idCourseCard);
+  console.log('====================================');
   const [dataOneCourse, setdataOneCourse] = useState(null);
   useEffect(() => {
-    getCourseDetails(idOneCourse);
+    getCourseDetails(idCourseCard);
   }, []);
 
-  const getCourseDetails = async (idOneCourse) => {
+  const getCourseDetails = async (idCourseCard) => {
     try {
-      const courseDetails = await getOneCourse(idOneCourse);
+      const courseDetails = await getOneCourse(idCourseCard);
       setdataOneCourse(courseDetails);
-      console.log("Course details:", courseDetails);
+      // console.log("Course details:", courseDetails);
     } catch (error) {
-      console.error("Error fetching course details:", error);
+      // console.error("Error fetching course details:", error);
     }
   };
 
@@ -116,9 +118,11 @@ export default function () {
                 <p>{dataOneCourse?.data?.course_description}</p>
                 <h6>Bạn sẽ học gì?</h6>
                 <ul>
-                  {dataOneCourse?.data?.course_lessonContent.map((content, index) => (
-                    <li key={index}>{content}</li>
-                  ))}
+                  {dataOneCourse?.data?.course_lessonContent.map(
+                    (content, index) => (
+                      <li key={index}>{content}</li>
+                    )
+                  )}
                 </ul>
               </div>
 
@@ -171,7 +175,7 @@ export default function () {
           <div className="newcourse-section-slide-box">
             <div className="newcourse-section-slide-box-button-box">
               <div className="new-course-section-slide-box-button">
-                <Link to="/lesson">
+                <Link to={`/lesson/${idCourseCard}`}>
                   <button>Bắt đầu học </button>
                 </Link>
               </div>

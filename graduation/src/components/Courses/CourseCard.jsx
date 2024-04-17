@@ -1,49 +1,92 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Card, Rate, Avatar, Button } from "antd";
+import { FaMoneyBillWaveAlt } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useStateValue } from "../../Context/StateProvider";
+import { actionType } from "../../Context/reducer";
 
-export default function
-  () {
+const { Meta } = Card;
+
+const CourseCard = ({ data }) => {
+  const navigate = useNavigate();
+  const { course_name, course_price, course_ratingsAverage, course_slug } =
+    data;
+  const course_thumnail =
+    data?.course_thumnail ||
+    "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/30.jpg";
+  const [{ idCourseCard }, dispatch] = useStateValue();
+  const handleClick = (id) => {
+    dispatch({ type: actionType.SET_IDCOURSECARD, idCourseCard: id });
+    navigate(`/newcourse`);
+    
+  };
   return (
-    <div>
-      <div className='courses-section-card'>
-        <img className='courses-section-card-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/30.jpg" alt="" />
-        <div className='discover-courses-section-card-content-box'>
-          <div className='discover-courses-section-card-content-box-list-start'>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <p>5.00 (1)</p>
-          </div>
-          <Link to='/newcourse'>
-            <a className='discover-courses-section-card-content-box-heading' href="">Speaking Korean for Beginners</a>
+    <Card
+      hoverable
+      style={{
+        width: 240,
+      }}
+      cover={<img alt="example" src={course_thumnail} />}
+      onClick={() => handleClick(data._id)}
+    >
+      <Meta
+        title={
+          <Link
+            to="/newcourse"
+            style={{
+              fontWeight: "bold",
+              fontSize: "16px",
+              overflowWrap: "break-word",
+              wordWrap: "break-word",
+            }}
+          >
+            {course_name}
           </Link>
-          <div className='discover-courses-section-card-content-box-time'>
-            <i class="fa-regular fa-user"></i>
-            <p>2</p>
-            <i class="fa-regular fa-clock"></i>
-            <p>3h 25m</p>
-          </div>
-          <div className='discover-courses-section-card-content-box-avatar-box'>
-            <div className='discover-courses-section-card-content-box-avatar'>
-              <img className='discover-courses-section-card-content-box-avatar-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5-150x150.jpg" alt="" />
+        }
+        description={
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <Rate disabled allowHalf defaultValue={course_ratingsAverage} />
             </div>
-            <Link to='/instructor'>
-            <span>
-              By <a href="">Sophia Jaymes</a>
-            </span>
-            </Link>
-            
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <span>Giá: {course_price}</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <Avatar src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5-150x150.jpg" />
+              <span style={{ marginLeft: "8px" }}>
+                <Link to="/instructor">Sophia Jaymes</Link>
+              </span>
+            </div>
+            <div style={{ marginRight: "7px", marginTop: "1rem" }}>
+              <Link to={`/newcourse/${course_slug}`}>
+                <Button type="primary" size="large" block>
+                  Bắt đầu học
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className='course-card-buttonbox'>
-          <Link to='/lesson'>
-            <button className='course-card-button'>Start Learning</button>
-          </Link>
+        }
+      />
+    </Card>
+  );
+};
 
-        </div>
-      </div>
-    </div>
-  )
-}
+export default CourseCard;
