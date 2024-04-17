@@ -108,7 +108,7 @@ export default function Login() {
                 alt=""
               />
               <p>
-                Đăng nhập với <span>Người hướng dẫn</span>
+                Đăng nhập với <span>Hướng dẫn</span>
               </p>
             </div>
             <div className="login-content-box-button-arrow">

@@ -1,6 +1,6 @@
 .login-section {
     display: grid;
-
+    height: 800px;
 }
 .login-content-box {
     display: flex;

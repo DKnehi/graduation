@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 export default function Header() {
-    const [isHovered, setIsHovered] = useState(false);
+    const [showDashBoardFormMenu, setShowDashBoardFormMenu] = useState(false);
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    }
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    }
+    const handleDashBoardClick = () => {
+        setShowDashBoardFormMenu((prev) => !prev);
+      };
     return (
         <div>
             <header className='header'>
@@ -27,14 +23,12 @@ export default function Header() {
                         <input type="text" placeholder='Tìm kiếm khóa học, bài viết, video,...' name="" id="" />
                     </div>
                 </nav>
-                {/* <div className="header-avatar-box"
-                 onMouseEnter={handleMouseEnter}
-                 onMouseLeave={handleMouseLeave}
-                >
-                    <div className="header-avatar"></div>
+
+                <div className="header-avatar-box">
+                    <div onClick={handleDashBoardClick} className="header-avatar"></div>
                     <p className='header-avatar-hello'>Hello </p>
                     <p> Quoc Dat</p>
-                    {isHovered && (
+                    {showDashBoardFormMenu && (
                         <div className="hovered-content">
                             <div className='hovered-content-login'>
                                 <img src="https://demo.themeum.com/tutor/wp-content/themes/tutorstarter/assets/dist/images/tutor-submenu-login-avatar.svg" alt="" />
@@ -44,7 +38,9 @@ export default function Header() {
                             <div className='hovered-content-menu1'>
                                 <ul className='hovered-content-menu1-list'>
                                     <li>
+                                        <Link to='/dashboard'>
                                         <a href="">Dashboard</a>
+                                        </Link>
                                     </li>
                                     <li>
                                         <a href="">My Profile</a>
@@ -109,13 +105,13 @@ export default function Header() {
 
                         </div>
                     )}
-                </div> */}
-                <div className='header-login-click'>
+                </div>
+                {/* <div className='header-login-click'>
                     <p>Want to Explore!</p>
                     <Link to='/login'>
                     Đăng nhập
                     </Link>
-                </div>
+                </div> */}
 
             </header>
         </div>

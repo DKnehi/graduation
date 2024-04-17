@@ -12,15 +12,17 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Instructor from "./components/instructor/Instructor";
 import Cart from "./components/Cart";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
   { path: "/instructor", component: Instructor },
 
-  { path: "/login", component: Login },
-  { path: "/register", component: Register },
+  { path: "/login", component: Login, layout:null},
+  { path: "/register", component: Register, layout:null },
   { path: "/cart", component: Cart },
+  { path: "/dashboard", component: Dashboard },
 ];
 
 function App() {

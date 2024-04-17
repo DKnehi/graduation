@@ -38,6 +38,8 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     place-items: center;
+    gap: 30px;
+    margin-top: 30px;
 }
 .discover-courses-section-card {
     width: 367px;
@@ -168,7 +170,7 @@
     }
     .discover-courses-section-list-card {
         grid-template-columns: repeat(2, 1fr);
-        padding: 0 30px;
+        margin-top: 80px;
     }
     
     .new-height-section {
@@ -209,8 +211,8 @@
     line-height: 78px;
 }
 .discover-courses-section-list-card {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0 50px;
+    grid-template-columns: repeat(4, 1fr);
+    
 }
 .new-height-section {
     padding: 0 150px;
