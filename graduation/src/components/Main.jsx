@@ -1,5 +1,6 @@
 import React from 'react'
-
+import CourseCard from "./Courses/CourseCard"
+import { Link, NavLink } from 'react-router-dom'
 export default function Main() {
   return (
     <div>
@@ -18,95 +19,17 @@ export default function Main() {
           <h2 className='discover-course-heading'>
             Discover Courses
           </h2>
+          <Link to ='/course'>
           <button className='discover-course-button'>
             View All Course
           </button>
+          </Link>
         </div>
         <div className='discover-courses-section-list-card'>
-          <div className='discover-courses-section-card'>
-            <img className='discover-courses-section-card-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/27.jpg" alt="" />
-            <div className='discover-courses-section-card-content-box'>
-              <div className='discover-courses-section-card-content-box-list-start'>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <p>5.00 (1)</p>
-              </div>
-              <a className='discover-courses-section-card-content-box-heading' href="">Speaking Korean for Beginners</a>
-              <div className='discover-courses-section-card-content-box-time'>
-                <i class="fa-regular fa-user"></i>
-                <p>6</p>
-                <i class="fa-regular fa-clock"></i>
-                <p>1h 25m</p>
-              </div>
-              <div className='discover-courses-section-card-content-box-avatar-box'>
-                <div className='discover-courses-section-card-content-box-avatar'>
-                  <img className='discover-courses-section-card-content-box-avatar-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-3-150x150.jpg" alt="" />
-                </div>
-                <span>
-                  By <a href="">Sophia Jaymes</a> In <a href="">Languages</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className='discover-courses-section-card'>
-            <img className='discover-courses-section-card-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/22.jpg" alt="" />
-            <div className='discover-courses-section-card-content-box'>
-              <div className='discover-courses-section-card-content-box-list-start'>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <p>5.00 (1)</p>
-              </div>
-              <a className='discover-courses-section-card-content-box-heading' href="">Arabic For Beginners</a>
-              <div className='discover-courses-section-card-content-box-time'>
-                <i class="fa-regular fa-user"></i>
-                <p>6</p>
-                <i class="fa-regular fa-clock"></i>
-                <p>1h 30m</p>
-              </div>
-              <div className='discover-courses-section-card-content-box-avatar-box'>
-                <div className='discover-courses-section-card-content-box-avatar'>
-                  <img className='discover-courses-section-card-content-box-avatar-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-4-150x150.jpg" alt="" />
-                </div>
-                <span>
-                  By <a href="">Sophia Jaymes</a> In <a href="">Languages</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className='discover-courses-section-card'>
-            <img className='discover-courses-section-card-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/30.jpg" alt="" />
-            <div className='discover-courses-section-card-content-box'>
-              <div className='discover-courses-section-card-content-box-list-start'>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <p>5.00 (1)</p>
-              </div>
-              <a className='discover-courses-section-card-content-box-heading' href="">Speaking Korean for Beginners</a>
-              <div className='discover-courses-section-card-content-box-time'>
-                <i class="fa-regular fa-user"></i>
-                <p>2</p>
-                <i class="fa-regular fa-clock"></i>
-                <p>3h 25m</p>
-              </div>
-              <div className='discover-courses-section-card-content-box-avatar-box'>
-                <div className='discover-courses-section-card-content-box-avatar'>
-                  <img className='discover-courses-section-card-content-box-avatar-image' src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5-150x150.jpg" alt="" />
-                </div>
-                <span>
-                  By <a href="">Sophia Jaymes</a> In <a href="">Languages</a>
-                </span>
-              </div>
-            </div>
-          </div>
+          <CourseCard></CourseCard>
+          <CourseCard></CourseCard>
+          <CourseCard></CourseCard>
+          <CourseCard></CourseCard>
         </div>
       </section>
       <section className='new-height-section'>
