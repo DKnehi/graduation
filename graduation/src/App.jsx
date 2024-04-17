@@ -28,7 +28,7 @@ const publicRoutes = [
   { path: "/cart", component: Cart },
 
   { path: "/newcourse", component: NewCourse },
-  { path: "/lesson", component: Lesson },
+  { path: "/lesson/:id", component: Lesson },
 ];
 
 function App() {

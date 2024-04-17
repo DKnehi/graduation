@@ -1,6 +1,8 @@
 export const actionType = {
   SET_ONECOURSE: "SET_ONECOURSE",
   SET_TYPECOURSE: "SET_TYPECOURSE",
+  SET_SEARCH: "SET_SEARCH",
+  SET_IDCOURSECARD: "SET_IDCOURSECARD",
 };
 
 const reducer = (state, action) => {
@@ -15,6 +17,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         typeCourse: action.typeCourse,
+      };
+    case actionType.SET_SEARCH:
+      return {
+        ...state,
+        search: action.search,
+      };
+    case actionType.SET_IDCOURSECARD:
+      return {
+        ...state,
+        idCourseCard: action.idCourseCard,
       };
 
     default:
