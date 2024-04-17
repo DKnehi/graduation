@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Rate, Avatar, Button } from "antd";
-import { FaMoneyBillWaveAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useStateValue } from "../../Context/StateProvider";
 import { actionType } from "../../Context/reducer";
@@ -18,7 +17,6 @@ const CourseCard = ({ data }) => {
   const handleClick = (id) => {
     dispatch({ type: actionType.SET_IDCOURSECARD, idCourseCard: id });
     navigate(`/newcourse`);
-    
   };
   return (
     <Card
@@ -40,7 +38,7 @@ const CourseCard = ({ data }) => {
               wordWrap: "break-word",
             }}
           >
-            {course_name}
+            {data?.course_name}
           </Link>
         }
         description={
@@ -76,7 +74,7 @@ const CourseCard = ({ data }) => {
               </span>
             </div>
             <div style={{ marginRight: "7px", marginTop: "1rem" }}>
-              <Link to={`/newcourse/${course_slug}`}>
+              <Link to={`/newcourse`}>
                 <Button type="primary" size="large" block>
                   Bắt đầu học
                 </Button>
