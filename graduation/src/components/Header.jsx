@@ -7,16 +7,13 @@ const { Search } = Input;
 export default function Header() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [stateLogin, setstateLogin] = useState(false);
+  const [stateLogin, setstateLogin] = useState(true);
   const [dataUser, setDataUser] = useState(null);
   const [{ search }, dispatch] = useStateValue();
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const [showDashBoardFormMenu, setShowDashBoardFormMenu] = useState(false);
+  const handleDashBoardClick = () => {
+    setShowDashBoardFormMenu((prev) => !prev);
   };
   useEffect(() => {
     const jsonString = localStorage.getItem("user");
@@ -68,11 +65,12 @@ export default function Header() {
         {stateLogin ? (
           <div
             className="header-avatar-box"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+
           >
             {/* <div className="header-avatar"> */}
-            <div className="">
+            <div className=""
+            onClick={handleDashBoardClick}
+            >
               <img
                 src={
                   dataUser?.metaData?.avatar
@@ -84,7 +82,7 @@ export default function Header() {
             </div>
             <p className="header-avatar-hello">Hello</p>
             <p>{dataUser?.metaData?.user_name}</p>
-            {isHovered && (
+            {showDashBoardFormMenu && (
               <div className="hovered-content">
                 <div className="hovered-content-login">
                   <img
@@ -108,9 +106,12 @@ export default function Header() {
                 </div>
                 <div className="hovered-content-menu1">
                   <ul className="hovered-content-menu1-list">
+                    <Link to='/dashboard'>
                     <li>
                       <a href="">Dashboard</a>
                     </li>
+                    </Link>
+      
                     <li>
                       <a href="">My Profile</a>
                     </li>

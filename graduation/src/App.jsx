@@ -18,6 +18,7 @@ import Cart from "./components/Cart";
 import NewCourse from "./components/CourseDetails/NewCourse";
 import Lesson from "./components/Lesson";
 import Dashboard from "./components/Dashboard/Dashboard";
+import CreateCourse from "./components/Dashboard/CreateCourse";
 
 const publicRoutes = [
   { path: "/", component: Main },
@@ -32,6 +33,7 @@ const publicRoutes = [
   { path: "/lesson/:id", component: Lesson },
 
   { path: "/dashboard", component: Dashboard, },
+  { path: "/createcourse", component: CreateCourse, },
 
 
 ];

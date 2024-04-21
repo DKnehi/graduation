@@ -206,7 +206,11 @@ export default function Register() {
             </div>
           )}
         </div>
-        <div className="login-slide-box"></div>
+        <div className="login-slide-box">
+        <img style={{width:'649px'}} src="https://demo.themeum.com/tutor/wp-content/uploads/2022/03/tutor-live-demo-carousel-dashboard.png" alt="" />
+          <h2>Personalized Dashboard for All Roles</h2>
+          <p>Organized and personalized dashboard for teachers & students. Access everything you need to manage your LMS website from one spot.</p>
+        </div>
       </section>
     </div>
   );
