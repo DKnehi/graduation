@@ -13,6 +13,7 @@
 @import url(./Dashboard.css);
 @import url(./Dashboard/ComponentDashboard.css);
 @import url(./Dashboard/EnrolledCourse.css);
+@import url(./CreateCourse.css);
 @import url(./Footer.css);
 
 body {
@@ -31,4 +32,5 @@ code {
 :root {
   --color-primary:  #246BFD;
   --color-second:#677BA2;
+  --color-line-boder: #CDCFD5;
 }

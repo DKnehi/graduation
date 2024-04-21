@@ -1,0 +1,16 @@
+.enrolled-course-list-card {
+    display: grid;
+    place-items: center;
+    gap: 30px;
+}
+
+@media (min-width: 768px) {
+    .enrolled-course-list-card {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 1024px) {
+    .enrolled-course-list-card {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

@@ -3,6 +3,7 @@ import ComponentDashboard from './ComponentDashboard';
 import MyProfile from './MyProfile';
 import EnrolledCourse from './EnrolledCourse';
 import EnrolledCourseCard from './EnrolledCourseCard';
+import { Link } from 'react-router-dom';
 export default function Dashboard() {
   const [activeButton, setActiveButton] = useState(1); // State để lưu trữ button đang được chọn
 
@@ -28,10 +29,13 @@ export default function Dashboard() {
           </div>
         </div>
         <div>
+          <Link to='/createcourse'>
           <button className='create-course-btn'>
             <i class="fa-solid fa-square-plus"></i>
             Create A New Course
           </button>
+          </Link>
+          
         </div>
       </div>
       <section className='dashboard-section'>
