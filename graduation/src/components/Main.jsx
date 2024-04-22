@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Main() {
   return (
@@ -18,9 +19,12 @@ export default function Main() {
           <h2 className='discover-course-heading'>
             Discover Courses
           </h2>
+          <Link to='/course'>
           <button className='discover-course-button'>
             View All Course
           </button>
+          </Link>
+          
         </div>
         <div className='discover-courses-section-list-card'>
           <div className='discover-courses-section-card'>

@@ -20,6 +20,7 @@ import Lesson from "./components/Lesson";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateCourse from "./components/Dashboard/CreateCourse";
 
+
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
@@ -34,6 +35,7 @@ const publicRoutes = [
 
   { path: "/dashboard", component: Dashboard, },
   { path: "/createcourse", component: CreateCourse, },
+  { path: "/lesson", component: Lesson, },
 
 
 ];

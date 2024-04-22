@@ -1,6 +1,9 @@
 .newcourse-section {
   padding: 20px;
 }
+.activeButtonNewCourse {
+  color: var(--color-primary);
+}
 .newcourse-section-headingbox i {
   color: #ed9700;
 }
@@ -144,9 +147,6 @@
 .newcourse-section-video-box-dad-content-heading h2:hover {
   color: var(--color-second);
 }
-.newcourse-section-video-box-dad-content-main {
-  padding: 25px 0;
-}
 .newcourse-section-video-box-dad-content-main h2 {
   font-size: 20px;
   color: var(--color-second);
@@ -170,7 +170,8 @@
   border-radius: 5px;
   border: 0.5px solid gray;
   cursor: pointer;
-  background-color: white;
+  background-color: #EFF1F6;
+  color: var(--color-primary);
 }
 .newcourse-section-video-box-dad-content-main-button:hover {
   color: var(--color-second);

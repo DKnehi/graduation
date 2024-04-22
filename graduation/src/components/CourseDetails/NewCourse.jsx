@@ -5,6 +5,8 @@ import findTypeCourse from "../../utils/findTypeCourse";
 import { useStateValue } from "../../Context/StateProvider";
 import ReactPlayer from "react-player";
 import { convertToTime } from "../../utils/convertToTime";
+import CourseInfo from "./CourseInfo";
+import Review from "./Review";
 export default function () {
   const [{ typeCourse, idCourseCard }, dispatch] = useStateValue();
   console.log('====================================');
@@ -41,6 +43,12 @@ export default function () {
       setisOpenContentCourse(true);
     }
     setselectedItemId(itemId);
+  };
+
+  const [activeButton, setActiveButton] = useState(1); // State để lưu trữ button đang được chọn
+
+  const handleButtonClick = (buttonId) => {
+    setActiveButton(buttonId); // Đặt button được chọn là button với ID tương ứng
   };
   return (
     <div>
@@ -88,87 +96,28 @@ export default function () {
             <div className="newcourse-section-video-box">
               <ReactPlayer
                 width="100%"
-                height="100%"
+                height="458px"
                 controls={true}
                 url={dataOneCourse?.data?.course_demoVideo}
               />
             </div>
             <div className="newcourse-section-video-box-dad-content">
               <div className="newcourse-section-video-box-dad-content-heading">
-                <h2>Course Info</h2>
-                <h2>Reviews</h2>
+                <h2
+                  onClick={() => handleButtonClick(1)}
+                  className={activeButton === 1 ? 'activeButtonNewCourse' : ''}
+                >Course Info</h2>
+                <h2
+                  onClick={() => handleButtonClick(2)}
+                  className={activeButton === 2 ? 'activeButtonNewCourse' : ''}
+                >Reviews</h2>
               </div>
-              {/* <div className="newcourse-section-video-box-dad-content-main">
-                <h2>Về khóa học</h2>
-                <p>{dataOneCourse?.data?.course_description}</p>
-                <h2>Nội dung khóa học</h2>
-                <div className="newcourse-section-video-box-dad-content-main-button-box">
-                  <button className="newcourse-section-video-box-dad-content-main-button">
-                    topic 1<i class="fa-solid fa-chevron-right"></i>
-                  </button>
-                </div>
-                <div className="newcourse-section-video-box-dad-content-main-button-box">
-                  <button className="newcourse-section-video-box-dad-content-main-button">
-                    topic 2<i class="fa-solid fa-chevron-right"></i>
-                  </button>
-                </div>
-              </div> */}
-              <div className="section-container-video-footer-subheader">
-                <h6>Về khóa học</h6>
-                <p>{dataOneCourse?.data?.course_description}</p>
-                <h6>Bạn sẽ học gì?</h6>
-                <ul>
-                  {dataOneCourse?.data?.course_lessonContent.map(
-                    (content, index) => (
-                      <li key={index}>{content}</li>
-                    )
-                  )}
-                </ul>
+              <div style={{padding:'25px 0'}}>
+                {/* Hiển thị Component 1 nếu button 1 được chọn */}
+                {activeButton === 1 && <CourseInfo></CourseInfo>}
+                {activeButton === 2 && <Review></Review>}
               </div>
 
-              <div className="section-container-video-footer-course-content">
-                <h6>Nội dung khóa học</h6>
-                {/* card content course */}
-                {dataOneCourse?.data?.courseData.map((item) => (
-                  <div key={item?._id}>
-                    <div
-                      onClick={() => handleSectionClick(item?._id)}
-                      className="section-container-video-footer-course-content-array"
-                    >
-                      {/* {console.log(item?._id)} */}
-                      {item?.courseData_title}
-                      <i
-                        className={`fa-solid fa-chevron-${
-                          isOpenContentCourse && selectedItemId === item?._id
-                            ? "down"
-                            : "right"
-                        }`}
-                      ></i>
-                    </div>
-                    {openSections[item?._id] && (
-                      <div className="section-container-video-footer-course-second-content-array">
-                        {item.courseDataVideo.map((content) => (
-                          <div
-                            key={content?._id}
-                            className="section-container-video-footer-course-second-content-array-arrl"
-                          >
-                            {/* {console.log(content._id)} */}
-                            <div className="section-container-video-footer-course-second-content-array-arrl-logo">
-                              <i class="fa-brands fa-youtube"></i>
-                              <a href="">{content.video_title}</a>
-                              {/* {console.log(content.courseData_title)} */}
-                            </div>
-                            <div className="section-container-video-footer-course-second-content-array-arrl-eye">
-                              <p>{convertToTime(content.video_length)}</p>
-                              <i class="fa-regular fa-eye"></i>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 
