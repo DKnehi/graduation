@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Rate, Avatar, Button } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { useStateValue } from "../../Context/StateProvider";
-import { actionType } from "../../Context/reducer";
+
+
 
 const { Meta } = Card;
 
@@ -13,9 +13,10 @@ const CourseCard = ({ data }) => {
   const course_thumnail =
     data?.course_thumnail ||
     "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/30.jpg";
-  const [{ idCourseCard }, dispatch] = useStateValue();
+
   const handleClick = (id) => {
-    dispatch({ type: actionType.SET_IDCOURSECARD, idCourseCard: id });
+
+    localStorage.setItem("idCourseCard", id); 
     navigate(`/newcourse`);
   };
   return (

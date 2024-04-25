@@ -1,43 +1,134 @@
 .courses-section-card {
-    width: 252px;
-    border: 0.5px solid gray;
-    border-radius: 5px;
+  width: 252px;
+  border: 0.5px solid gray;
+  border-radius: 5px;
 }
 .courses-section-card-image {
-    width: 251px;
-    border-radius: 4px;
+  width: 251px;
+  border-radius: 4px;
 }
 .course-card-buttonbox {
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-    border-top: 0.5px solid gray;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  border-top: 0.5px solid gray;
 }
 .course-card-button {
-    padding: 10px 60px;
-    background: none;
-    border-radius: 5px;
-    border: 0.5px solid var(--color-primary);
-    color: var(--color-primary);
-    font-size: 16px;
-    cursor: pointer;
+  padding: 10px 60px;
+  background: none;
+  border-radius: 5px;
+  border: 0.5px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 16px;
+  cursor: pointer;
 }
 .course-card-button:hover {
-    border: 1px solid var(--color-second);
-    background-color: var(--color-second);
-    color: white;
+  border: 1px solid var(--color-second);
+  background-color: var(--color-second);
+  color: white;
 }
 .enrolled-course-card-process {
-    display: flex;
-    justify-content: space-between;
-    margin: 25px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
 }
 .enrolled-course-card-process p {
-    font-size: 18px;
+  font-size: 18px;
 }
 .enrolled-course-persen {
-    width: 100%;
-    height: 5px;
-    background-color: var(--color-second);
-    border-radius: 10px;
+  width: 100%;
+  height: 5px;
+  background-color: var(--color-second);
+  border-radius: 10px;
+}
+
+/* ------------- */
+.section-container-video-footer-course-content {
+  margin-top: 30px;
+}
+.section-container-video-footer-course-content h6 {
+  font-size: 24px;
+  color: #5572d1;
+}
+.section-container-video-footer-course-content-array {
+  margin-top: 30px;
+  width: 100%;
+  border: 1px solid #a8a8a8;
+  background-color: #fcfcfd;
+  height: 50px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.section-container-video-footer-course-content-array:hover {
+  color: #5572d1;
+}
+.section-container-video-footer-course-content-array i {
+  float: right;
+  color: #5572d1;
+}
+.section-container-video-footer-course-content-array p:hover {
+  color: #5572d1;
+}
+.section-container-video-footer-course-second-content-array {
+  width: 100%;
+  height: auto;
+  padding: 0.1rem;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border: 1px solid #a8a8a8;
+  border-top: none;
+  position: relative;
+}
+.section-container-video-footer-course-second-content-array-arrl {
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+}
+.section-container-video-footer-course-second-content-array-arrl:hover {
+  background-color: #eff1f6;
+}
+.section-container-video-footer-course-second-content-array-arrl-logo {
+  display: flex;
+  margin: auto 1rem;
+}
+.section-container-video-footer-course-second-content-array-arrl-eye {
+  position: absolute;
+  display: flex;
+  margin-left: 87%;
+  margin-top: 12px;
+}
+.section-container-video-footer-course-second-content-array-arrl-logo a {
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+.section-container-video-footer-course-second-content-array-arrl-eye i {
+  margin-left: 10px;
+}
+.section-container-video-footer-course-second-content-array-dl-eye {
+  position: absolute;
+  margin-left: 95.7%;
+  margin-top: 10px;
+}
+.section-container-video-footer-course-second-content-array-11-eye {
+  position: absolute;
+  margin-left: 95.7%;
+  margin-top: 10px;
+}
+.section-container-video-footer-course-second-content-java {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #a8a8a8;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.section-container-video-footer-course-second-content-array-ass-eye {
+  margin-top: 10px;
+  margin-left: 95.5%;
+  position: absolute;
 }

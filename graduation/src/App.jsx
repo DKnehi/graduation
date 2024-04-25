@@ -31,7 +31,7 @@ const publicRoutes = [
   { path: "/cart", component: Cart },
 
   { path: "/newcourse", component: NewCourse },
-  { path: "/lesson/:id", component: Lesson },
+  { path: "/lesson", component: Lesson },
 
   { path: "/dashboard", component: Dashboard, },
   { path: "/createcourse", component: CreateCourse, },

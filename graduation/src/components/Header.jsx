@@ -7,7 +7,7 @@ const { Search } = Input;
 export default function Header() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const [stateLogin, setstateLogin] = useState(true);
+  const [stateLogin, setstateLogin] = useState(false);
   const [dataUser, setDataUser] = useState(null);
   const [{ search }, dispatch] = useStateValue();
 
@@ -30,6 +30,11 @@ export default function Header() {
     // console.log(value);
   };
 
+  const handelLogout = ()=>{
+    localStorage.clear();
+    handleDashBoardClick()
+    setstateLogin(false);
+  }
   return (
     <div>
       <header className="header">
@@ -46,13 +51,6 @@ export default function Header() {
             <div className="buger-icon buger-icon3"></div>
           </div>
           <div className="menu">
-            {/* <i class="fa-solid fa-magnifying-glass"></i>
-            <input
-              type="text"
-              placeholder="Tìm kiếm khóa học, bài viết, video,..."
-              name=""
-              id=""
-            /> */}
             <Search
               placeholder="Tìm kiếm khóa học, bài viết, video,..."
               allowClear
@@ -168,7 +166,7 @@ export default function Header() {
                       <a href="">Settings</a>
                     </li>
                     <li>
-                      <a href="">Logout</a>
+                      <Link to={"/"} onClick={handelLogout}>Logout</Link>
                     </li>
                   </ul>
                 </div>

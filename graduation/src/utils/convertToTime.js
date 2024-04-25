@@ -1,13 +1,14 @@
 import moment from "moment";
 
-export const convertToTime = (decimalTime) => {
-  const hours = Math.floor(decimalTime);
-  const minutes = Math.floor((decimalTime - hours) * 60);
-  const seconds = Math.round(((decimalTime - hours) * 60 - minutes) * 60);
+export const convertToTime = (totalSeconds) => {
+  const duration = moment.duration(totalSeconds, "seconds");
+  const hours = Math.floor(duration.asHours());
+  const minutes = Math.floor(duration.minutes());
+  const seconds = Math.floor(duration.seconds());
 
   return moment
     .utc()
     .startOf("day")
     .add({ hours, minutes, seconds })
-    .format("HH:mm");
+    .format("HH:mm:ss");
 };

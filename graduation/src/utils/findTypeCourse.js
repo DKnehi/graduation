@@ -1,5 +1,5 @@
 const findTypeCourse = (typeCourse, id) => {
-  console.log(typeCourse);
+  // console.log(typeCourse);
   // Kiểm tra xem typeCourse có tồn tại và không phải là null
 
   if (typeCourse) {

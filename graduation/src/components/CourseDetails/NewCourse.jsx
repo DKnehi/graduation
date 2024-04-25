@@ -1,66 +1,75 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getOneCourse } from "../../api";
+import { getOneCourse, getOneCourseMember } from "../../api";
 import findTypeCourse from "../../utils/findTypeCourse";
 import { useStateValue } from "../../Context/StateProvider";
 import ReactPlayer from "react-player";
 import { convertToTime } from "../../utils/convertToTime";
 import CourseInfo from "./CourseInfo";
-import Review from "./Review";
-export default function () {
-  const [{ typeCourse, idCourseCard }, dispatch] = useStateValue();
-  console.log('====================================');
-  console.log(idCourseCard);
-  console.log('====================================');
-  const [dataOneCourse, setdataOneCourse] = useState(null);
-  useEffect(() => {
-    getCourseDetails(idCourseCard);
-  }, []);
+import Review from "./Review/Review";
+import { Button, Rate } from "antd";
+import { FaMoneyCheckDollar, FaGraduationCap, FaClock } from "react-icons/fa6";
+export default function CourseDetail() {
+  const [{ typeCourse }, dispatch] = useStateValue();
+  const jsonString = localStorage.getItem("user");
+  const user = JSON.parse(jsonString);
 
-  const getCourseDetails = async (idCourseCard) => {
+  const [dataOneCourse, setdataOneCourse] = useState(null);
+  // console.log(dataOneCourse?.data?.course_ratingsAverage);
+  useEffect(() => {
+    const storedIdCourseCard = localStorage.getItem("idCourseCard");
+    const initialIdCourseCard = storedIdCourseCard
+      ? storedIdCourseCard
+      : "65d89f2602fed4ae3c6d5375";
+
+    if (jsonString) {
+      getCourseDetailsMember(initialIdCourseCard);
+    } else {
+      getCourseDetailsGuest(initialIdCourseCard);
+    }
+  }, []);
+  // console.log(dataOneCourse);
+  const getCourseDetailsMember = async (idCourseCard) => {
+    const accessToken = user?.accessToken;
+    const idUser = user?.metaData?._id;
+    // console.log(accessToken, idUser);
+    try {
+      const courseDetails = await getOneCourseMember(
+        idCourseCard,
+        idUser,
+        accessToken
+      );
+      setdataOneCourse(courseDetails);
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  };
+  const getCourseDetailsGuest = async (idCourseCard) => {
     try {
       const courseDetails = await getOneCourse(idCourseCard);
       setdataOneCourse(courseDetails);
-      // console.log("Course details:", courseDetails);
     } catch (error) {
-      // console.error("Error fetching course details:", error);
+      console.error("Error fetching course details:", error);
     }
   };
 
-  const [openSections, setOpenSections] = useState({});
-  const handleSectionClick = (sectionId) => {
-    setOpenSections((prevOpenSections) => ({
-      ...prevOpenSections,
-      [sectionId]: !prevOpenSections[sectionId],
-    }));
-  };
-  const [isOpenContentCourse, setisOpenContentCourse] = useState(false);
-  const [selectedItemId, setselectedItemId] = useState(null);
-  const handleButtonCCClick = (itemId) => {
-    if (selectedItemId === itemId) {
-      setisOpenContentCourse(!isOpenContentCourse);
-    } else {
-      setisOpenContentCourse(true);
-    }
-    setselectedItemId(itemId);
-  };
-
-  const [activeButton, setActiveButton] = useState(1); // State để lưu trữ button đang được chọn
+  const [activeButton, setActiveButton] = useState(1);
 
   const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId); // Đặt button được chọn là button với ID tương ứng
+    setActiveButton(buttonId);
   };
+
+  const formatPrice = (price) => {
+    if (typeof price !== "undefined" && price !== null) {
+      return price.toLocaleString("vi-VN");
+    }
+    return "";
+  };
+
   return (
     <div>
       <section className="newcourse-section">
         <div className="newcourse-section-headingbox">
-          <div className="newcourse-section-headingbox-star-group">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-          </div>
           <h2 className="newcourse-section-heading">
             {dataOneCourse?.data?.course_name}
           </h2>
@@ -77,18 +86,9 @@ export default function () {
             <p>Khóa học của</p>
             <a href="">James Aston</a>
             <p>
+              Thể loại:{" "}
               {findTypeCourse(typeCourse, dataOneCourse?.data?.course_type)}
             </p>
-          </div>
-          <div className="newcourse-section-sharebox">
-            <div className="newcourse-section-share">
-              <i class="fa-regular fa-bookmark"></i>
-              <p>Whilelist</p>
-            </div>
-            <div className="newcourse-section-share">
-              <i class="fa-solid fa-share"></i>
-              <p>Share</p>
-            </div>
           </div>
         </div>
         <div className="newcourse-section-video-content">
@@ -99,52 +99,68 @@ export default function () {
                 height="458px"
                 controls={true}
                 url={dataOneCourse?.data?.course_demoVideo}
+                light={dataOneCourse?.data?.course_thumnail}
               />
             </div>
             <div className="newcourse-section-video-box-dad-content">
               <div className="newcourse-section-video-box-dad-content-heading">
                 <h2
                   onClick={() => handleButtonClick(1)}
-                  className={activeButton === 1 ? 'activeButtonNewCourse' : ''}
-                >Course Info</h2>
+                  className={activeButton === 1 ? "activeButtonNewCourse" : ""}
+                >
+                  Course Info
+                </h2>
                 <h2
                   onClick={() => handleButtonClick(2)}
-                  className={activeButton === 2 ? 'activeButtonNewCourse' : ''}
-                >Reviews</h2>
+                  className={activeButton === 2 ? "activeButtonNewCourse" : ""}
+                >
+                  Reviews
+                </h2>
               </div>
-              <div style={{padding:'25px 0'}}>
-                {/* Hiển thị Component 1 nếu button 1 được chọn */}
-                {activeButton === 1 && <CourseInfo></CourseInfo>}
-                {activeButton === 2 && <Review></Review>}
-              </div>
+              <div style={{ padding: "25px 0" }}>
+                {activeButton === 1 && (
+                  <CourseInfo data={dataOneCourse?.data} />
+                )}
+                {activeButton === 2 && (
+                  <Review idCourse={dataOneCourse?.data?._id} />
+                )}
 
+              </div>
             </div>
           </div>
 
           <div className="newcourse-section-slide-box">
             <div className="newcourse-section-slide-box-button-box">
               <div className="new-course-section-slide-box-button">
-                <Link to={`/lesson/${idCourseCard}`}>
-                  <button>Bắt đầu học </button>
+                <Link to={`/lesson/`}>
+                  <Button type="primary">Bắt đầu học </Button>
                 </Link>
               </div>
               <div className="newcourse-section-slide-box-content-box">
                 <div className="newcourse-section-ranking">
-                  <i class="fa-solid fa-chart-simple"></i>
-                  <p>Intermediate</p>
+                  <FaMoneyCheckDollar />
+                  <div>
+                    {formatPrice(dataOneCourse?.data?.course_price)} VND
+                  </div>
                 </div>
                 <div className="newcourse-section-ranking">
-                  <i class="fa-solid fa-graduation-cap"></i>
-                  <p>0 Total Enrolled</p>
+                  <FaGraduationCap />
+                  <div>
+                    {dataOneCourse?.data?.course_purchased} người đăng ký
+                  </div>
                 </div>
                 <div className="newcourse-section-ranking">
-                  <i class="fa-solid fa-arrows-rotate"></i>
-                  <p>March 22, 2024 Last Updated</p>
+                  <FaClock />
+                  <div>
+                    Tổng thời gian{" "}
+                    {convertToTime(dataOneCourse?.data?.total_length_video)}
+                  </div>
                 </div>
-                <div className="newcourse-section-ranking">
-                  <i class="fa-solid fa-stamp"></i>
-                  <p>Certificate of completion</p>
-                </div>
+                <Rate
+                  disabled
+                  allowHalf
+                  value={dataOneCourse?.data?.course_ratingsAverage}
+                />
               </div>
             </div>
             <div className="newcourse-section-slide-box-avatar-box">

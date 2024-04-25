@@ -1,78 +1,53 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { activateUser, register } from "../../../api";
+import { Form, Input, Button, message } from "antd";
 
-import { toast, ToastContainer } from "react-toastify";
 export default function Register() {
   const [showUserRegisterForm, setShowUserRegisterForm] = useState(false);
-  const [showInstructorRegisterForm, setShowInstructorRegisterForm] =
-    useState(false);
   const [showOTPCode, setShowOTPCode] = useState(false);
-// không gửi đc dữ liệu sẽ bị lỗi, nên thay đổi bật tắt thủ công
+  const [otpString, setOtpString] = useState("");
+  const navigate = useNavigate();
+
   const handleUserRegisterClick = () => {
     setShowUserRegisterForm((prev) => !prev);
-    setShowInstructorRegisterForm(false);
   };
-
-  const handleInstructorRegisterClick = () => {
-    setShowInstructorRegisterForm((prev) => !prev);
-    setShowUserRegisterForm(false);
-  };
-
-
-  const [otpString, setotpString] = useState();
-
-
-
-
-  // -----------------------------------------------------------------------
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
-  // console.log(name, email, pass);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  console.log(name, email, pass);
+  const handleSubmit = async () => {
     try {
-      register(name, email, pass).then((data) => {
-      if (data.code === 201) {
-        console.log(data);
-      setShowOTPCode(true);
-      setShowUserRegisterForm(false);
-
-      sessionStorage.setItem(
-        "activationToken",
-        JSON.stringify(data.data.activationToken)
-      );
-      setTimeout(() => {
-        sessionStorage.removeItem("activationToken");
-      }, 5 * 60 * 1000);
+      const response = await register(name, email, pass);
+      if (response.code === 201) {
+        setShowOTPCode(true);
+        setShowUserRegisterForm();
+        sessionStorage.setItem(
+          "activationToken",
+          JSON.stringify(response.data.activationToken)
+        );
+        setTimeout(() => {
+          sessionStorage.removeItem("activationToken");
+        }, 5 * 60 * 1000);
       }
-      else console.log("tk da ton tai");
-      
-    });
     } catch (error) {
-      
+      message.error("Tài khoản đã tồn tại");
     }
-    
   };
-  // console.log(otpValues);
-  const navigate = useNavigate();
-// console.log(otpString);
-  const handleSubmitOTP = async (event) => {
-    event.preventDefault();
+
+  const handleSubmitOTP = async () => {
     const activationToken = sessionStorage.getItem("activationToken");
     const stringWithoutQuotes = activationToken.replace(/^"(.*)"$/, "$1");
     console.log(otpString, stringWithoutQuotes);
     activateUser(otpString, stringWithoutQuotes).then((data) => {
       if (data.code == 201) {
+        setShowOTPCode(false);
         navigate("/login");
-        console.log(data);
-        console.log("đk thành công");
-      } else console.log("sai otp");
+        // console.log(data);
+        message.success("Đăng ký thành công");
+      } else message.error("Sai mã otp");
     });
   };
-
   return (
     <div>
       <section className="login-section">
@@ -80,8 +55,7 @@ export default function Register() {
           <h2>Tạo tài khoản!</h2>
           <p className="login-content-box-subheading">
             Để khám phá chi tiết các tính năng của sinh viên, chỉ cần nhấp vào
-            'Đăng ký làm sinh viên'. Ngoài ra, hãy nhấp vào 'Đăng ký làm người
-            hướng dẫn' để khám phá khía cạnh của người hướng dẫn.
+            'Đăng ký làm sinh viên'.
           </p>
           <button
             className="login-content-box-button"
@@ -97,119 +71,96 @@ export default function Register() {
               </p>
             </div>
             <div className="login-content-box-button-arrow">
-              <i class="fa-solid fa-chevron-right"></i>
+              <i className="fa-solid fa-chevron-right"></i>
             </div>
           </button>
           {showUserRegisterForm && (
-            <form onSubmit={handleSubmit} className="login-form">
-              <h2>Học viên</h2>
-              <input
-                type="text"
-                name=""
-                placeholder="Họ và tên"
-                id=""
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="email"
-                name=""
-                placeholder="Email"
-                id=""
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                name=""
-                placeholder="Mật khẩu"
-                id=""
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
-              />
-              <button type="">Đăng ký</button>
-              <ToastContainer />
-              <p>
-                Already have an account?{" "}
-                <Link to="/login">
-                  <a href="">Sign in</a>
-                </Link>
-              </p>
-            </form>
+            <Form
+              name="registerForm"
+              className="register-form"
+              onFinish={handleSubmit}
+              layout="vertical"
+            >
+              <h2> </h2>
+              <Form.Item
+                style={{ marginTop: "1rem" }}
+                name="name"
+                rules={[
+                  { required: true, message: "Vui lòng nhập họ và tên!" },
+                ]}
+              >
+                <Input
+                  type="text"
+                  placeholder="Họ và tên"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Vui lòng nhập email!" },
+                  { type: "email", message: "Email không đúng định dạng!" },
+                ]}
+              >
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+              >
+                <Input.Password
+                  placeholder="Mật khẩu"
+                  onChange={(e) => setPass(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Đăng ký
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <p>
+                  Already have an account? <Link to="/login">Sign in</Link>
+                </p>
+              </Form.Item>
+            </Form>
           )}
           {showOTPCode && (
-            <form onSubmit={handleSubmitOTP} className="otp-form">
+            <Form onFinish={handleSubmitOTP} className="">
               <h2>Mã xác thực</h2>
-              <p>Please enter the code we just sent to email</p>
-              <div>{email}</div>
-              {/* <div className="otp-input-box">
-                {otpValues.map((value, index) => (
-                  <input
-                    className="otp-input"
-                    key={index}
-                    id={`otpInput${index}`}
-                    type="text"
-                    placeholder="-"
-                    maxLength={1}
-                    value={value}
-                    onChange={(event) => handleChange(index, event)}
-                  />
-                ))}
-              </div> */}
-              <input type="text" placeholder="Nhập mã OTP" onChange={(e)=>setotpString(e.target.value)} />
-              <p style={{ color: "blue" }} onClick={handleSubmit}>
-                Resend code
+              <p style={{ marginBottom: "1rem " }}>
+                Vui lòng nhập mã OTP được gửi về email
               </p>
-              <button type="">Đăng ký</button>
-            </form>
-          )}
-          <button
-            className="login-content-box-button"
-            onClick={handleInstructorRegisterClick}
-          >
-            <div className="login-content-box-button-name">
-              <img
-                src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/tutor-live-demo-instructor-icon.svg"
-                alt=""
-              />
-              <p>
-                Register as a <span>Instructor</span>
-              </p>
-            </div>
-            <div className="login-content-box-button-arrow">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
-          </button>
-          {showInstructorRegisterForm && (
-            <div className="login-form">
-              <h2>Instructor</h2>
-              <input type="text" name="" placeholder="Enter your name" id="" />
-              <input
-                type="email"
-                name=""
-                placeholder="Enter your email"
-                id=""
-              />
-              <input
-                type="password"
-                name=""
-                placeholder="Enter your password"
-                id=""
-              />
-              <button>Sign Up</button>
-              <p>
-                Already have an account?{" "}
-                <Link to="/login">
-                  <a href="">Sign in</a>
-                </Link>
-              </p>
-            </div>
+              <div style={{ display: "flex", gap: "1rem" }}>
+                <Input.OTP
+                  variant="filled"
+                  value={otpString}
+                  onChange={(otp) => setOtpString(otp)}
+                  length={4}
+                />
+                <Button onClick={handleSubmit}>Resend code</Button>
+              </div>
+
+              <Button
+                style={{ margin: "1rem 0" }}
+                type="primary"
+                htmlType="submit"
+              >
+                Đăng ký
+              </Button>
+            </Form>
           )}
         </div>
         <div className="login-slide-box">
-        <img style={{width:'649px'}} src="https://demo.themeum.com/tutor/wp-content/uploads/2022/03/tutor-live-demo-carousel-dashboard.png" alt="" />
-          <h2>Personalized Dashboard for All Roles</h2>
-          <p>Organized and personalized dashboard for teachers & students. Access everything you need to manage your LMS website from one spot.</p>
+          <img
+            style={{ width: "649px" }}
+            src="https://demo.themeum.com/tutor/wp-content/uploads/2022/03/tutor-live-demo-carousel-dashboard.png"
+            alt=""
+          />
         </div>
       </section>
     </div>
