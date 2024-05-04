@@ -6,6 +6,7 @@ const { Meta } = Card;
 const { Text } = Typography;
 
 const CardReply = ({ reply }) => {
+  // console.log(reply);
   return (
     <Card style={{ width: 300, marginBottom: 20 }} bordered={true}>
       <Meta
@@ -20,7 +21,7 @@ const CardReply = ({ reply }) => {
         title={reply.userId.user_name}
         description={
           <>
-            <Text>{reply.reply_comment}</Text>
+            <Text>{reply?.reply_comment || reply?.answser_comment}</Text>
             <br />
             <Text type="secondary">
               {moment(reply.createdAt).format("DD/MM/YYYY")}

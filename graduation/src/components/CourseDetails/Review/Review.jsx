@@ -5,11 +5,11 @@ import { Button, message, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { getDataLocal } from "../../../utils/getLocalStorage";
 import { checkIdExists } from "../../../utils/findCoursePurchased";
-export default function Review(idCourse) {
+export default function Review({ idCourse, isUserReview }) {
   const [data, setdata] = useState(null);
   // console.log(idCourse);
   useEffect(() => {
-    loadReview(idCourse.idCourse, "1");
+    loadReview(idCourse, "1");
   }, []);
   const loadReview = async (id, page) => {
     try {
@@ -20,7 +20,7 @@ export default function Review(idCourse) {
       return null;
     }
   };
-  console.log(data);
+  //   console.log(data);
   const jsonString = localStorage.getItem("user");
   const user = JSON.parse(jsonString);
   const accessToken = user?.accessToken;
@@ -33,10 +33,10 @@ export default function Review(idCourse) {
         idUser,
         idCm,
         accessToken,
-        idCourse.idCourse,
+        idCourse,
         commentText
       );
-      loadReview(idCourse.idCourse, "1");
+      loadReview(idCourse, "1");
     } catch (error) {
       console.log(error);
     }
@@ -49,13 +49,13 @@ export default function Review(idCourse) {
     try {
       await ReviewsAPI.addReview(
         idUser,
-        idCourse.idCourse,
+        idCourse,
         accessToken,
         rate,
         commentText
       );
       //   console.log(idUser, idCourse.idCourse, accessToken, rate, commentText);
-      loadReview(idCourse.idCourse, "1");
+      loadReview(idCourse, "1");
     } catch (error) {
       return message.error("Bạn phải mua khóa học!");
     }
@@ -64,19 +64,14 @@ export default function Review(idCourse) {
   };
   const [commentText, setCommentText] = useState("");
   const [rate, setRate] = useState();
-
-    // const checkUserIdExists = (data, userId) => {
-    //   return data.some((review) => review.userId._id === userId);
-    // };
-    console.log(data);
+  // console.log(isUserReview);
   return (
     <div>
       {data?.map((review) => (
         <ReviewCard key={review._id} review={review} onReply={handleComment} />
       ))}
-      
-      {roleUser?.user_role === "student" &&
-      checkIdExists(idCourse.idCourse) ? (
+
+      { isUserReview === false ? (
         !showCommentInput ? (
           <Button type="primary" onClick={handleCommentClick}>
             Đánh giá khóa học

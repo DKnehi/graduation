@@ -9,7 +9,10 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+const jsonString = localStorage.getItem("user");
+const user = JSON.parse(jsonString);
+const accessToken = user?.accessToken;
+const idUser = user?.metaData?._id;
 // ------------------------------ login--------------------------------
 
 export const Login = {
@@ -86,17 +89,13 @@ export const getOneCourse = async (idOneCourse) => {
   }
 };
 
-export const getOneCourseMember = async (
-  idOneCourse,
-  clientId,
-  accessToken
-) => {
+export const getOneCourseMember = async (idOneCourse) => {
   try {
     const res = await axiosClient.get(
       `/v1/api/course/get-one-course/learn/${idOneCourse}`,
       {
         headers: {
-          "x-client-id": clientId,
+          "x-client-id": idUser,
           "x-atoken-id": accessToken,
         },
       }
@@ -121,7 +120,7 @@ export const getCourseType = async () => {
 export const getAllCourses = async (page) => {
   try {
     const res = await axios.get(
-      `${baseURL}/v1/api/course?limit=8&page=${page}`
+      `${baseURL}/v1/api/course//get-all-course?limit=9&page=${page}`
     );
     // console.log(res);
     return res;
@@ -186,6 +185,264 @@ export const ReviewsAPI = {
         headers: {
           "x-client-id": idUser,
           "x-atoken-id": token,
+        },
+      }
+    );
+  },
+};
+
+export const upload = {
+  uploadImg: (formData) => {
+    const url = `${baseURL}/v1/api/upload-images`;
+    return axios.post(
+      url,
+      { imgaes: formData },
+      {
+        headers: {
+          "Content-Type": `multipart/form-data;`,
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+          //
+        },
+      }
+    );
+  },
+  uploadVideo: (formData) => {
+    const url = `${baseURL}/v1/api/upload-video`;
+    return axios.post(
+      url,
+      { video: formData },
+      {
+        headers: {
+          "Content-Type": `multipart/form-data;`,
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+          //
+        },
+      }
+    );
+  },
+  submitCourse: (objData) => {
+    const url = `${baseURL}/v1/api/course/create-course`;
+    console.log(objData);
+    return axios.post(url, objData, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+};
+
+export const Info = {
+  teacher: (id) => {
+    // console.log(typeof id);
+    return axios.get(`${baseURL}/v1/api/user/information-teacher/${id}`);
+  },
+  user: () => {
+    return axios.get(`${baseURL}/v1/api/user/information`, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+  chargePass: (oldPass, newPass) => {
+    return axios.patch(
+      `${baseURL}/v1/api/user/update-password`,
+      {
+        old_passWord: oldPass,
+        new_passWord: newPass,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+  updatPrf: (obj) => {
+    console.log(obj);
+    return axios.patch(`${baseURL}/v1/api/user/update-profile`, obj, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+};
+
+export const getInfoTeacher = async (id) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/v1/api/user/information-teacher/${id}`
+    );
+    return res;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const CreateCourseData = {
+  title: (id, title) => {
+    console.log(id, title);
+    return axios.post(
+      `${baseURL}/v1/api/course/create-course-data/${id}`,
+      {
+        courseData_title: title,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+  createCourseVideo: (id, title, url, time) => {
+    console.log(id, title, url, time);
+    return axios.post(
+      `${baseURL}/v1/api/course/create-course-video/${id}`,
+      {
+        video_title: title,
+        video_url: url,
+        video_length: time,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+};
+
+export const cart = {
+  getCart: () => {
+    return axios.get(`${baseURL}/v1/api/cart`, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+  addCart: (idCourse) => {
+    return axios.post(`${baseURL}/v1/api/cart/${idCourse}`, null, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+  deleteCart: (idCourse) => {
+    return axios.delete(`${baseURL}/v1/api/cart/${idCourse}`, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+};
+
+export const vnPay = {
+  buy: (id) => {
+    return axios.get(
+      `${baseURL}/v1/api/create-order/payment/create_payment_url/${id}`,
+      null,
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+};
+export const Course = {
+  byTeacher: (id, page) => {
+    return axios.get(
+      `${baseURL}/v1/api/user/all-course-teacher/${id}?limit=5&page=${page}`
+    );
+  },
+  userEnrolled: () => {
+    return axios.get(`${baseURL}/v1/api/user/get-purchased-course`, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+};
+
+export const Process = {
+  upProcess: (idCourse, idVideo) => {
+    return axios.post(
+      `${baseURL}/v1/api/course/update-process-learn/${idCourse}`,
+      {
+        video_shema: idVideo,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+};
+export const type = {
+  addType: (textType) => {
+    return axios.post(
+      `${baseURL}/v1/api/course/create-type`,
+      {
+        type_name: textType,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+};
+export const Question = {
+  getQuestion: (idVideo) => {
+    return axios.get(`${baseURL}/v1/api/feedback/get-question/${idVideo}`, {
+      headers: {
+        "x-client-id": idUser,
+        "x-atoken-id": accessToken,
+      },
+    });
+  },
+  addQuestion: (idVideo, time, idCourse, text) => {
+    return axios.post(
+      `${baseURL}/v1/api/feedback/add-question/${idVideo}`,
+      {
+        video_time: time,
+        courseId: idCourse,
+        question_comment: text,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+  addAnwser: (idCm, text) => {
+    return axios.post(
+      `${baseURL}/v1/api/feedback/add-anwser/${idCm}`,
+      {
+        answser_comment: text,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
         },
       }
     );

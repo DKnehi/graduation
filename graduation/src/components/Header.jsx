@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Input, Space } from "antd";
 import { useStateValue } from "../Context/StateProvider";
 import { actionType } from "../Context/reducer";
+import { FaShoppingCart } from "react-icons/fa";
 const { Search } = Input;
 export default function Header() {
   const navigate = useNavigate();
@@ -30,11 +31,11 @@ export default function Header() {
     // console.log(value);
   };
 
-  const handelLogout = ()=>{
+  const handelLogout = () => {
     localStorage.clear();
-    handleDashBoardClick()
+    handleDashBoardClick();
     setstateLogin(false);
-  }
+  };
   return (
     <div>
       <header className="header">
@@ -60,15 +61,15 @@ export default function Header() {
             />
           </div>
         </nav>
-        {stateLogin ? (
-          <div
-            className="header-avatar-box"
 
-          >
+        {stateLogin ? (
+          <div className="header-avatar-box">
+            <Link to={"/cart"}>
+              <FaShoppingCart />
+            </Link>
+
             {/* <div className="header-avatar"> */}
-            <div className=""
-            onClick={handleDashBoardClick}
-            >
+            <div className="" onClick={handleDashBoardClick}>
               <img
                 src={
                   dataUser?.metaData?.avatar
@@ -104,12 +105,12 @@ export default function Header() {
                 </div>
                 <div className="hovered-content-menu1">
                   <ul className="hovered-content-menu1-list">
-                    <Link to='/dashboard'>
-                    <li>
-                      <a href="">Dashboard</a>
-                    </li>
+                    <Link to="/dashboard">
+                      <li>
+                        <a href="">Dashboard</a>
+                      </li>
                     </Link>
-      
+
                     <li>
                       <a href="">My Profile</a>
                     </li>
@@ -166,7 +167,9 @@ export default function Header() {
                       <a href="">Settings</a>
                     </li>
                     <li>
-                      <Link to={"/"} onClick={handelLogout}>Logout</Link>
+                      <Link to={"/"} onClick={handelLogout}>
+                        Logout
+                      </Link>
                     </li>
                   </ul>
                 </div>

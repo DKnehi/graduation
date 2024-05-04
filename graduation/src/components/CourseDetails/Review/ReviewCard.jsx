@@ -3,6 +3,7 @@ import { Card, Avatar, Rate, Typography, Button, Input } from "antd";
 import moment from "moment";
 import CardReply from "./CardReply";
 import { getDataLocal } from "../../../utils/getLocalStorage";
+import { convertToTime } from "../../../utils/convertToTime";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -22,36 +23,46 @@ const ReviewCard = ({ review, onReply }) => {
     setShowReplyInput(false);
   };
   const roleUser = getDataLocal("userInfo");
-  
+  // console.log(review);
   return (
     <Card style={{ width: "auto", marginBottom: 20 }} bordered={true}>
       <Meta
         avatar={
           <Avatar
             src={
-              review.userId.user_avatar ||
+              review?.userId?.user_avatar ||
               "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-3-150x150.jpg"
             }
           />
         }
-        title={review.userId.user_name}
+        title={review?.userId?.user_name}
         description={
           <>
-            <Rate disabled defaultValue={review.review_rating} />
-            <Text style={{ marginLeft: "2rem" }}>{review.review_comment}</Text>
+            {review["video_time"] !== undefined ? (
+              convertToTime(review?.video_time)
+            ) : (
+              <Rate disabled defaultValue={review?.review_rating} />
+            )}
+
+            <Text style={{ marginLeft: "2rem" }}>{review?.review_comment}</Text>
             <br />
             <Text type="secondary">
-              {moment(review.createdAt).format("DD/MM/YYYY")}
+              {moment(review?.createdAt).format("DD/MM/YYYY")}
             </Text>
             <br />
-            <p style={{ marginBottom: "1rem" }}>Câu trả lời của giảng viên:</p>
-            {review.reply_comment.map((reply) => (
+            <p style={{ marginBottom: "1rem" }}>Câu trả lời :</p>
+            {review?.reply_comment?.map((reply) => (
               <CardReply key={reply._id} reply={reply} />
-            ))}
-            {roleUser?.user_role === "teacher" ? (
+            )) ||
+              review?.answser_comment?.map((reply) => (
+                <CardReply key={reply._id} reply={reply} />
+              ))}
+        
+            {roleUser?.user_role === "teacher" ||
+            review["video_time"] !== undefined ? (
               !showReplyInput ? (
                 <Button type="primary" onClick={handleReplyClick}>
-                  Reply
+                  Trả lời
                 </Button>
               ) : (
                 <div>
@@ -65,7 +76,7 @@ const ReviewCard = ({ review, onReply }) => {
                     type="primary"
                     onClick={handleReplySubmit}
                   >
-                    Submit
+                    đăng câu trả lời
                   </Button>
                 </div>
               )

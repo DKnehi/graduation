@@ -33,7 +33,7 @@
 }
 .cart-content-card-imgbox img{
     border-radius: 8px;
-    max-width: 100%;
+    max-width: 15rem;
 }
 .cart-content-card-imgbox p{
     font-size: 18px;

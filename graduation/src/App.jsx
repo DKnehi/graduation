@@ -24,7 +24,7 @@ import CreateCourse from "./components/Dashboard/CreateCourse";
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
-  { path: "/instructor", component: Instructor },
+  { path: "/instructor/:id", component: Instructor },
 
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },

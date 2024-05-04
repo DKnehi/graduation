@@ -2,7 +2,7 @@ export const actionType = {
   SET_ONECOURSE: "SET_ONECOURSE",
   SET_TYPECOURSE: "SET_TYPECOURSE",
   SET_SEARCH: "SET_SEARCH",
-  SET_IDCOURSECARD: "SET_IDCOURSECARD",
+  SET_DATA_COURSE_lEARN: "SET_DATA_COURSE_lEARN",
 };
 
 const reducer = (state, action) => {
@@ -23,10 +23,10 @@ const reducer = (state, action) => {
         ...state,
         search: action.search,
       };
-    case actionType.SET_IDCOURSECARD:
+    case actionType.SET_DATA_COURSE_lEARN:
       return {
         ...state,
-        idCourseCard: action.idCourseCard,
+        dataCourseLearn: action.dataCourseLearn,
       };
 
     default:

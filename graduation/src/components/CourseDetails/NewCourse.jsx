@@ -1,44 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getOneCourse, getOneCourseMember } from "../../api";
+import {
+  cart,
+  CreateCourseData,
+  getInfo,
+  getInfoTeacher,
+  getOneCourse,
+  getOneCourseMember,
+} from "../../api";
 import findTypeCourse from "../../utils/findTypeCourse";
 import { useStateValue } from "../../Context/StateProvider";
 import ReactPlayer from "react-player";
 import { convertToTime } from "../../utils/convertToTime";
 import CourseInfo from "./CourseInfo";
 import Review from "./Review/Review";
-import { Button, Rate } from "antd";
+import { Button, message, Rate } from "antd";
 import { FaMoneyCheckDollar, FaGraduationCap, FaClock } from "react-icons/fa6";
+import { actionType } from "../../Context/reducer";
+
 export default function CourseDetail() {
-  const [{ typeCourse }, dispatch] = useStateValue();
+  const [{ typeCourse, dataCourseLearn }, dispatch] = useStateValue();
   const jsonString = localStorage.getItem("user");
   const user = JSON.parse(jsonString);
 
   const [dataOneCourse, setdataOneCourse] = useState(null);
-  // console.log(dataOneCourse?.data?.course_ratingsAverage);
-  useEffect(() => {
-    const storedIdCourseCard = localStorage.getItem("idCourseCard");
-    const initialIdCourseCard = storedIdCourseCard
-      ? storedIdCourseCard
-      : "65d89f2602fed4ae3c6d5375";
+  const [dataTeacher, setdataTeacher] = useState(null);
 
-    if (jsonString) {
-      getCourseDetailsMember(initialIdCourseCard);
-    } else {
-      getCourseDetailsGuest(initialIdCourseCard);
+  const [reloadData, setReloadData] = useState(false);
+  const handleReloadData = () => {
+    setReloadData(!reloadData);
+  };
+  // console.log(dataOneCourse?.data?.course_ratingsAverage);
+  const storedIdCourseCard = localStorage.getItem("idCourseCard");
+  const initialIdCourseCard = storedIdCourseCard
+    ? storedIdCourseCard
+    : "65d89f2602fed4ae3c6d5375";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (jsonString) {
+        await getCourseDetailsMember(initialIdCourseCard);
+      } else {
+        await getCourseDetailsGuest(initialIdCourseCard);
+      }
+    };
+    fetchData();
+  }, [reloadData]);
+  useEffect(() => {
+    if (dataOneCourse) {
+      getDataTeacher();
+      checkVideoUrl(dataOneCourse);
     }
-  }, []);
-  // console.log(dataOneCourse);
-  const getCourseDetailsMember = async (idCourseCard) => {
-    const accessToken = user?.accessToken;
-    const idUser = user?.metaData?._id;
-    // console.log(accessToken, idUser);
+  }, [dataOneCourse]);
+  const getDataTeacher = async () => {
     try {
-      const courseDetails = await getOneCourseMember(
-        idCourseCard,
-        idUser,
-        accessToken
-      );
+      const data = await getInfoTeacher(dataOneCourse?.data?.user_teacher);
+      setdataTeacher(data.data.data);
+    } catch (error) {
+      console.error("Error fetching course details:", error);
+    }
+  };
+  const getCourseDetailsMember = async (idCourseCard) => {
+    try {
+      const courseDetails = await getOneCourseMember(idCourseCard);
       setdataOneCourse(courseDetails);
     } catch (error) {
       console.error("Error fetching course details:", error);
@@ -66,6 +90,34 @@ export default function CourseDetail() {
     return "";
   };
 
+  const [hasVideoUrl, setHasVideoUrl] = useState(false);
+  const checkVideoUrl = () => {
+    if (
+      dataOneCourse?.data?.course_data[0]?.course_data_video?.course_video[0]?.hasOwnProperty(
+        "video_url"
+      )
+    ) {
+      setHasVideoUrl(true);
+    } else {
+      setHasVideoUrl(false);
+    }
+  };
+  console.log(dataOneCourse);
+  const dataCourse = dataOneCourse?.data;
+
+  const handelAddCart = (id) => {
+    cart
+      .addCart(id)
+      .then((data) => {
+        console.log(data);
+        message.success("giỏ hàng!");
+      })
+      .catch((error) => {
+        console.error(error);
+        message.error("Lỗi giỏ hàng!");
+      });
+  };
+  console.log(dataOneCourse?.data?.is_user_review);
   return (
     <div>
       <section className="newcourse-section">
@@ -79,16 +131,15 @@ export default function CourseDetail() {
             <div className="newcourse-section-avatar">
               <img
                 className="newcourse-section-avatar"
-                src="https://demo.themeum.com/tutor/wp-content/uploads/2023/12/60156-97afaf0b623337083cae6212e6a76a46.jpg"
+                src={dataTeacher?.findTeacher?.user_avatar}
                 alt=""
               />
             </div>
             <p>Khóa học của</p>
-            <a href="">James Aston</a>
-            <p>
-              Thể loại:{" "}
-              {findTypeCourse(typeCourse, dataOneCourse?.data?.course_type)}
-            </p>
+            <Link to={`/instructor/${dataTeacher?.findTeacher?._id}`}>
+              {dataTeacher?.findTeacher?.user_name}
+            </Link>
+            <p>Thể loại: {dataOneCourse?.data?.course_type?.type_name}</p>
           </div>
         </div>
         <div className="newcourse-section-video-content">
@@ -119,12 +170,17 @@ export default function CourseDetail() {
               </div>
               <div style={{ padding: "25px 0" }}>
                 {activeButton === 1 && (
-                  <CourseInfo data={dataOneCourse?.data} />
+                  <CourseInfo
+                    data={dataCourse}
+                    handleReload={handleReloadData}
+                  />
                 )}
                 {activeButton === 2 && (
-                  <Review idCourse={dataOneCourse?.data?._id} />
+                  <Review
+                    idCourse={dataOneCourse?.data?._id}
+                    isUserReview={dataOneCourse?.data?.is_user_review}
+                  />
                 )}
-
               </div>
             </div>
           </div>
@@ -132,9 +188,18 @@ export default function CourseDetail() {
           <div className="newcourse-section-slide-box">
             <div className="newcourse-section-slide-box-button-box">
               <div className="new-course-section-slide-box-button">
-                <Link to={`/lesson/`}>
-                  <Button type="primary">Bắt đầu học </Button>
-                </Link>
+                {hasVideoUrl ? (
+                  <Link to={`/lesson/`}>
+                    <Button type="primary">Bắt đầu học </Button>
+                  </Link>
+                ) : (
+                  <Button
+                    onClick={() => handelAddCart(initialIdCourseCard)}
+                    type="primary"
+                  >
+                    Thêm vào danh sách
+                  </Button>
+                )}
               </div>
               <div className="newcourse-section-slide-box-content-box">
                 <div className="newcourse-section-ranking">
@@ -176,7 +241,7 @@ export default function CourseDetail() {
                   />
                 </div>
                 <div>
-                  <h2>James Aston</h2>
+                  <h2>{dataTeacher?.findTeacher?.user_name}</h2>
                   <p>Desain grafis</p>
                 </div>
               </div>
