@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../Courses/CourseCard";
 import { Course, Info } from "../../api";
-import { message } from "antd";
+import { Avatar, message } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 export default function () {
   const [dataTeacher, setdataTeacher] = useState(null);
   const [dataCourse, setdataCourse] = useState({});
-
+  const id = localStorage.getItem("idInstructor");
+  // console.log(id);
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    const id = currentPath.split("/").pop();
     getDataTeacher(id);
     getCourseByTeacher(id, 1);
   }, []);
+
   const getDataTeacher = (id) => {
     Info.teacher(id)
       .then((response) => {
@@ -26,7 +27,6 @@ export default function () {
   const getCourseByTeacher = (id, page) => {
     Course.byTeacher(id, page)
       .then((response) => {
-        // console.log(response?.data?.data);
         setdataCourse(response?.data?.data);
       })
       .catch((error) => {
@@ -42,15 +42,16 @@ export default function () {
         <div className="instructor-section-headingbox">
           <div className="instructor-section-info-box">
             <div className="instructor-section-info-box2">
-              <div className="info-box-avatar">
-                <img
-                  className="info-box-avatar-image"
+              <div >
+                <Avatar
+                style={{border: '8px solid white'}}
+                  icon={<UserOutlined />}
                   src={
                     dataTeacher?.findTeacher?.user_avatar
                       ? dataTeacher?.findTeacher?.user_avatar
-                      : "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5.jpg"
+                      : null
                   }
-                  alt=""
+                  size={200}
                 />
               </div>
               <div className="info-box-name">
@@ -67,7 +68,7 @@ export default function () {
         </div>
         <div className="instructor-section-list-card">
           <h2 className="instructor-section-list-card-heading">
-            Thông tin giảng viên
+            Giới thiệu về giảng viên
           </h2>
           <p className="instructor-section-list-card-subheading">
             {dataTeacher?.findTeacher?.user_about}

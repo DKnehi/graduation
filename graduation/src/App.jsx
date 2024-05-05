@@ -20,11 +20,10 @@ import Lesson from "./components/Lesson";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateCourse from "./components/Dashboard/CreateCourse";
 
-
 const publicRoutes = [
   { path: "/", component: Main },
   { path: "/course", component: Course },
-  { path: "/instructor/:id", component: Instructor },
+  { path: "/instructor", component: Instructor },
 
   { path: "/login", component: Login, layout: null },
   { path: "/register", component: Register, layout: null },
@@ -33,11 +32,9 @@ const publicRoutes = [
   { path: "/newcourse", component: NewCourse },
   { path: "/lesson", component: Lesson },
 
-  { path: "/dashboard", component: Dashboard, },
-  { path: "/createcourse", component: CreateCourse, },
-  { path: "/lesson", component: Lesson, },
-
-
+  { path: "/dashboard", component: Dashboard },
+  { path: "/createcourse", component: CreateCourse },
+  { path: "/lesson", component: Lesson },
 ];
 
 function App() {

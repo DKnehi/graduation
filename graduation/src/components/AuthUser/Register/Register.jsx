@@ -4,18 +4,14 @@ import { activateUser, register } from "../../../api";
 import { Form, Input, Button, message } from "antd";
 
 export default function Register() {
-  const [showUserRegisterForm, setShowUserRegisterForm] = useState(false);
+  const [showUserRegisterForm, setShowUserRegisterForm] = useState(true);
   const [showOTPCode, setShowOTPCode] = useState(false);
   const [otpString, setOtpString] = useState("");
   const navigate = useNavigate();
 
-  const handleUserRegisterClick = () => {
-    setShowUserRegisterForm((prev) => !prev);
-  };
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
-  console.log(name, email, pass);
   const handleSubmit = async () => {
     try {
       const response = await register(name, email, pass);
@@ -54,32 +50,27 @@ export default function Register() {
         <div className="login-content-box">
           <h2>Tạo tài khoản!</h2>
           <p className="login-content-box-subheading">
-            Để khám phá chi tiết các tính năng của sinh viên, chỉ cần nhấp vào
-            'Đăng ký làm sinh viên'.
+            Để khám phá chi tiết các tính năng với tư cách thành viên, hãy đăng
+            ký!
           </p>
-          <button
-            className="login-content-box-button"
-            onClick={handleUserRegisterClick}
-          >
+          <div className="login-content-box-button">
             <div className="login-content-box-button-name">
               <img
                 src="https://demo.themeum.com/tutor/wp-content/uploads/2022/02/tutor-live-demo-student-icon.svg"
                 alt=""
               />
               <p>
-                Tạo tài khoản <span>Học viên</span>
+                Tạo tài khoản <span>K26Demy</span>
               </p>
             </div>
-            <div className="login-content-box-button-arrow">
-              <i className="fa-solid fa-chevron-right"></i>
-            </div>
-          </button>
+          </div>
           {showUserRegisterForm && (
             <Form
               name="registerForm"
               className="register-form"
               onFinish={handleSubmit}
               layout="vertical"
+              style={{ width: "45%", marginTop: "0.8rem" }}
             >
               <h2> </h2>
               <Form.Item
@@ -90,6 +81,7 @@ export default function Register() {
                 ]}
               >
                 <Input
+                  size="large"
                   type="text"
                   placeholder="Họ và tên"
                   onChange={(e) => setName(e.target.value)}
@@ -103,6 +95,7 @@ export default function Register() {
                 ]}
               >
                 <Input
+                  size="large"
                   type="email"
                   placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
@@ -113,27 +106,32 @@ export default function Register() {
                 rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
               >
                 <Input.Password
+                  size="large"
                   placeholder="Mật khẩu"
                   onChange={(e) => setPass(e.target.value)}
                 />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  style={{ width: "100%" }}
+                >
                   Đăng ký
                 </Button>
               </Form.Item>
               <Form.Item>
                 <p>
-                  Already have an account? <Link to="/login">Sign in</Link>
+                  Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
                 </p>
               </Form.Item>
             </Form>
           )}
           {showOTPCode && (
-            <Form onFinish={handleSubmitOTP} className="">
-              <h2>Mã xác thực</h2>
-              <p style={{ marginBottom: "1rem " }}>
-                Vui lòng nhập mã OTP được gửi về email
+            <Form onFinish={handleSubmitOTP}>
+              <p style={{ margin: "1rem 0", padding: "0 2rem" }}>
+                Vui lòng nhập mã OTP được gửi về email!
               </p>
               <div style={{ display: "flex", gap: "1rem" }}>
                 <Input.OTP
@@ -142,13 +140,14 @@ export default function Register() {
                   onChange={(otp) => setOtpString(otp)}
                   length={4}
                 />
-                <Button onClick={handleSubmit}>Resend code</Button>
+                <Button onClick={handleSubmit}>Gửi lại OTP</Button>
               </div>
 
               <Button
-                style={{ margin: "1rem 0" }}
+                style={{ margin: "1.5rem 0", width: "100%" }}
                 type="primary"
                 htmlType="submit"
+                size="large"
               >
                 Đăng ký
               </Button>

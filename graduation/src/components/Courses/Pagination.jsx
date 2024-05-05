@@ -1,5 +1,5 @@
 import React from 'react';
-// import './Pagination.css'; // Import CSS file for styling (chỉ để minh họa)
+// import './Pagination.css'; 
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const maxPageNumbers = 5; // Số lượng nút trang tối đa hiển thị

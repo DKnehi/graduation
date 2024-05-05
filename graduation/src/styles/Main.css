@@ -1,6 +1,6 @@
 .main {
-    padding: 50px 20px;
-    text-align: center;
+  position: relative;
+  text-align: center;
 }
 .main-heading {
     font-size: 32px;
@@ -11,218 +11,236 @@
     font-weight: 700;
 }
 .main-image {
-    width: 1140px;
-    max-width: 100%;
-    border-radius: 15px;
-    margin-top: 30px;
+  width: 50%;
+  max-width: 100%;
+  border-radius: 15px;
+  margin-top: 30px;
+}
+.overlay-content {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.overlay-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.overlay-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
 }
 .discover-courses-section {
-    padding: 0 10px;
+  padding: 0 10px;
 }
 .discover-course-heading {
-    font-size: 26px;
-    font-weight: 400;
+  font-size: 26px;
+  font-weight: 400;
 }
 .discover-course-button {
-    font-weight: 400;
-    font-size: 16px;
-    color: gray;
-    cursor: pointer;
-    padding: 15px 30px;
-    margin-top: 20px;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
+  font-weight: 400;
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+  padding: 15px 30px;
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 .discover-courses-section-list-card {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    place-items: center;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  place-items: center;
 }
 .discover-courses-section-card {
-    width: 367px;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-top: 50px;
+  width: 367px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top: 50px;
 }
 .discover-courses-section-card-image {
-    width: 365px;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 365px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .discover-courses-section-card-content-box {
-    padding: 20px 20px;
+  padding: 20px 20px;
 }
 .discover-courses-section-card-content-box-list-start {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 .discover-courses-section-card-content-box-list-start i {
-    color: #ED9700;
+  color: #ed9700;
 }
 .discover-courses-section-card-content-box-heading {
-    font-size: 22px;
-    font-weight: 450;
-    color: rgb(65, 65, 124);
+  font-size: 22px;
+  font-weight: 450;
+  color: rgb(65, 65, 124);
 }
 .discover-courses-section-card-content-box-heading:hover {
-    color: var(--color-primary);
+  color: var(--color-primary);
 }
 .discover-courses-section-card-content-box-time {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 .discover-courses-section-card-content-box-avatar-box {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
 }
 .discover-courses-section-card-content-box-avatar {
-    width: 36px;
-    height: 36px;
-    background-color: palevioletred;
-    border-radius: 50px;
-    margin-right: 20px;
+  width: 36px;
+  height: 36px;
+  background-color: palevioletred;
+  border-radius: 50px;
+  margin-right: 20px;
 }
 .discover-courses-section-card-content-box-avatar-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50px;
 }
 .new-height-section {
-    padding: 0 10px;
-    margin-top: 100px;
+  padding: 0 10px;
+  margin-top: 100px;
 }
 .new-height-section-heading {
-    font-size: 26px;
-    font-weight: 400;
-    line-height: 36px;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 36px;
 }
 .new-height-section-subheading {
-    font-size: 20px;
-    margin-top: 20px;
-    line-height: 32px;
+  font-size: 20px;
+  margin-top: 20px;
+  line-height: 32px;
 }
 .new-height-section-list-card {
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(1, 1fr);
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(1, 1fr);
 }
 .new-height-section-card {
-    text-align: center;
-    width: 340px;
-    margin-top: 80px;
+  text-align: center;
+  width: 340px;
+  margin-top: 80px;
 }
 .new-height-section-card-heading {
-    font-size: 26px;
-    margin-top: 25px;
-    font-weight: 500;
+  font-size: 26px;
+  margin-top: 25px;
+  font-weight: 500;
 }
 .new-height-section-card-subheading {
-    color: gray;
-    margin-top: 20px;
-    font-size: 18px;
-    line-height: 26px;
+  color: gray;
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 26px;
 }
 .elearning-section {
-    background-color: #FFF3F1;
-    text-align: center;
-    margin-top: 50px;
-   padding-top: 50px;
+  background-color: #fff3f1;
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 50px;
 }
 
 .elearning-section-content-box-heading {
-    font-size: 36px;
-    color: var(--color-primary);
+  font-size: 36px;
+  color: var(--color-primary);
 }
 .elearning-section-content-box-subheading {
-    font-weight: 400;
-    font-size: 26px;
-    margin-top: 50px;
+  font-weight: 400;
+  font-size: 26px;
+  margin-top: 50px;
 }
 .elearning-section-content-box-image {
-    max-width: 100%;
+  max-width: 100%;
 }
 @media (min-width: 768px) {
-    .main-heading {
-        font-size: 56px;
-        line-height: 66px;
-    }
-    .main-image {
-        margin-top: 100px;
-    }
-    .discover-courses-section {
-        margin-top: 50px;
-    }
-    .discover-course-heading-box {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .discover-course-heading {
-        font-size: 38px;
-        
-    }
-    .discover-courses-section-list-card {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 30px;
-    }
-    
-    .new-height-section {
-        margin-top: 150px;
-        padding: 50px;
-    }
-    .new-height-section-heading {
-        font-size: 38px;
-        line-height: 46px;
-    }
-    .new-height-section-list-card {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .elearning-section {
-        margin-top: 150px;
-        padding-top: 100px;
-    }
-    .elearning-section-content-box-heading {
-        font-size: 86px;
-    }
-    .elearning-section-content-box-subheading {
-        font-weight: 400;
-        font-size: 46px;
-        margin-top: 50px;
-    }
-    
-    
-}
-@media (min-width: 1025px) {
-.main {
-    padding-top: 100px;
-}
-.main-heading-box {
-    padding: 0 200px;
-}
-.main-heading {
-    font-size: 68px;
-    line-height: 78px;
-}
-.discover-courses-section-list-card {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 0 50px;
-}
-.new-height-section {
-    padding: 0 150px;
-}
-.new-height-section-content-box {
+  .main-heading {
+    font-size: 56px;
+    line-height: 66px;
+  }
+  .main-image {
+    margin-top: 100px;
+  }
+  .discover-courses-section {
+    margin-top: 50px;
+  }
+  .discover-course-heading-box {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+  }
+  .discover-course-heading {
+    font-size: 38px;
+  }
+  .discover-courses-section-list-card {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 30px;
+  }
+
+  .new-height-section {
+    margin-top: 150px;
+    padding: 50px;
+  }
+  .new-height-section-heading {
+    font-size: 38px;
+    line-height: 46px;
+  }
+  .new-height-section-list-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .elearning-section {
+    margin-top: 150px;
+    padding-top: 100px;
+  }
+  .elearning-section-content-box-heading {
+    font-size: 86px;
+  }
+  .elearning-section-content-box-subheading {
+    font-weight: 400;
+    font-size: 46px;
+    margin-top: 50px;
+  }
 }
-.new-height-section-list-card {
+@media (min-width: 1025px) {
+  .main {
+    padding-top: 100px;
+  }
+  .main-heading-box {
+    padding: 0 200px;
+  }
+  .main-heading {
+    font-size: 68px;
+    line-height: 78px;
+  }
+  .discover-courses-section-list-card {
     grid-template-columns: repeat(3, 1fr);
-}
-.discover-course-heading-box {
+    padding: 0 50px;
+  }
+  .new-height-section {
     padding: 0 150px;
-}
+  }
+  .new-height-section-content-box {
+    display: flex;
+    align-items: center;
+  }
+  .new-height-section-list-card {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .discover-course-heading-box {
+    padding: 0 150px;
+  }
 }

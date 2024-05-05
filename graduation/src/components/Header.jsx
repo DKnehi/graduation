@@ -1,41 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Input, Space } from "antd";
+import { Avatar, Button, Dropdown, Flex, Input, Menu, Space } from "antd";
 import { useStateValue } from "../Context/StateProvider";
 import { actionType } from "../Context/reducer";
 import { FaShoppingCart } from "react-icons/fa";
+import { UserOutlined } from "@ant-design/icons";
 const { Search } = Input;
 export default function Header() {
   const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
   const [stateLogin, setstateLogin] = useState(false);
   const [dataUser, setDataUser] = useState(null);
   const [{ search }, dispatch] = useStateValue();
 
-  const [showDashBoardFormMenu, setShowDashBoardFormMenu] = useState(false);
-  const handleDashBoardClick = () => {
-    setShowDashBoardFormMenu((prev) => !prev);
-  };
   useEffect(() => {
-    const jsonString = localStorage.getItem("user");
-    if (jsonString) {
-      const parsedDataUser = JSON.parse(jsonString);
-      setDataUser(parsedDataUser);
-      setstateLogin(true);
-    }
+    const delay = setTimeout(() => {
+      const jsonString = localStorage.getItem("userInfo");
+      if (jsonString) {
+        const parsedDataUser = JSON.parse(jsonString);
+        setDataUser(parsedDataUser);
+        setstateLogin(true);
+      }
+    }, 200);
+
+    return () => clearTimeout(delay);
   }, []);
-  //   console.log(dataUser);
+
   const onSearch = (value) => {
     dispatch({ type: actionType.SET_SEARCH, search: value });
     navigate(`/course`);
-    // console.log(value);
   };
 
   const handelLogout = () => {
     localStorage.clear();
-    handleDashBoardClick();
     setstateLogin(false);
+    navigate("/");
   };
+
+  const handleMenuClick = ({ key }) => {
+    if (key === "logout") {
+      handelLogout();
+    }
+    if (key === "profile") {
+      navigate("/dashboard");
+    }
+    if (key === "dashboard") {
+      navigate("/dashboard");
+    }
+    if (key === "cart") {
+      navigate("/cart");
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {dataUser?.user_role === "teacher" && (
+        <Menu.Item key="dashboard">Dashboard</Menu.Item>
+      )}
+      {dataUser?.user_role === "student" && (
+        <Menu.Item key="cart">Danh sách chờ</Menu.Item>
+      )}
+
+      <Menu.Item key="profile">Thông tin tài khoản</Menu.Item>
+      <Menu.Item key="logout">Đăng xuất</Menu.Item>
+    </Menu>
+  );
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div>
       <header className="header">
@@ -61,126 +94,41 @@ export default function Header() {
             />
           </div>
         </nav>
+        <div style={{  width: "auto" }}>
+          {stateLogin ? (
+            <Dropdown overlay={menu} placement="bottomRight">
+              <div>
+                <Avatar
+                  src={dataUser?.user_avatar ? dataUser?.user_avatar : null}
+                  size={40}
+                  icon={<UserOutlined />}
+                  style={{ marginRight: "8px", cursor: "pointer" }}
+                />
 
-        {stateLogin ? (
-          <div className="header-avatar-box">
-            <Link to={"/cart"}>
-              <FaShoppingCart />
-            </Link>
+                <span
+                  style={{ cursor: "pointer", color: "grey", fontSize: "1rem" }}
+                >
+                  Xin chào
+                </span>
 
-            {/* <div className="header-avatar"> */}
-            <div className="" onClick={handleDashBoardClick}>
-              <img
-                src={
-                  dataUser?.metaData?.avatar
-                    ? dataUser?.metaData?.avatar
-                    : "https://demo.themeum.com/tutor/wp-content/themes/tutorstarter/assets/dist/images/tutor-submenu-login-avatar.svg"
-                }
-                alt=""
-              />
-            </div>
-            <p className="header-avatar-hello">Hello</p>
-            <p>{dataUser?.metaData?.user_name}</p>
-            {showDashBoardFormMenu && (
-              <div className="hovered-content">
-                <div className="hovered-content-login">
-                  <img
-                    src={
-                      dataUser?.metaData?.avatar
-                        ? dataUser?.metaData?.avatar
-                        : "https://demo.themeum.com/tutor/wp-content/themes/tutorstarter/assets/dist/images/tutor-submenu-login-avatar.svg"
-                    }
-                    alt=""
-                  />
-
-                  <Link to={"/login"}>
-                    <h2>
-                      Login as a <span>Student</span>
-                    </h2>
-                  </Link>
-
-                  <button>
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </button>
-                </div>
-                <div className="hovered-content-menu1">
-                  <ul className="hovered-content-menu1-list">
-                    <Link to="/dashboard">
-                      <li>
-                        <a href="">Dashboard</a>
-                      </li>
-                    </Link>
-
-                    <li>
-                      <a href="">My Profile</a>
-                    </li>
-                    <li>
-                      <a href="">Enrolled Courses</a>
-                    </li>
-                    <li>
-                      <a href="">Wishlist</a>
-                    </li>
-                    <li>
-                      <a href="">Reviews</a>
-                    </li>
-                    <li>
-                      <a href="">My Quiz Attempts</a>
-                    </li>
-                    <li>
-                      <a href="">Order History</a>
-                    </li>
-                    <li>
-                      <a href="">Question & Answer</a>
-                    </li>
-                    <li>
-                      <a href="">Calendar</a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="hovered-content-menu1">
-                  <ul className="hovered-content-menu1-list">
-                    <li>
-                      <a href="">My Courses</a>
-                    </li>
-                    <li>
-                      <a href="">My Bundles</a>
-                    </li>
-                    <li>
-                      <a href="">Announcements</a>
-                    </li>
-                    <li>
-                      <a href="">Withdrawals</a>
-                    </li>
-                    <li>
-                      <a href="">Quiz Attempts</a>
-                    </li>
-                    <li>
-                      <a href="">Assignments</a>
-                    </li>
-                    <li>
-                      <a href="">Certificate</a>
-                    </li>
-                    <li>
-                      <a href="">Analytics</a>
-                    </li>
-                    <li>
-                      <a href="">Settings</a>
-                    </li>
-                    <li>
-                      <Link to={"/"} onClick={handelLogout}>
-                        Logout
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                <span
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "1.1rem",
+                    fontWeight: "500",
+                  }}
+                >
+                  {" "}
+                  {dataUser?.user_name}
+                </span>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className="header-login-click">
-            <Link to="/login">Đăng nhập</Link>
-          </div>
-        )}
+            </Dropdown>
+          ) : (
+            <Button type="primary" onClick={handleLogin} size="large">
+              Đăng nhập
+            </Button>
+          )}
+        </div>
       </header>
     </div>
   );

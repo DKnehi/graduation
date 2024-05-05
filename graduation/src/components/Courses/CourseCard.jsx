@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, Rate, Avatar, Button, Progress } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-
+import { FaUserEdit } from "react-icons/fa";
+import { UserOutlined } from "@ant-design/icons";
 const { Meta } = Card;
 
 const CourseCard = ({ data }) => {
-  console.log(data?.process_Course);
   const navigate = useNavigate();
-  const { course_name, course_price, course_ratingsAverage, course_slug } =
+  const { course_name, course_price, course_ratingsAverage, course_purchased } =
     data;
   const course_thumnail =
     data?._id?.course_thumnail ||
@@ -18,29 +18,57 @@ const CourseCard = ({ data }) => {
     localStorage.setItem("idCourseCard", id);
     navigate(`/newcourse`);
   };
+  const formatPrice = (price) => {
+    if (typeof price !== "undefined" && price !== null) {
+      return price.toLocaleString("vi-VN");
+    }
+    return "";
+  };
   return (
+    
     <Card
-      hoverable
+      classNames="course-card"
       style={{
-        width: 240,
+        width: 280,
+        overflow: "hidden",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
       }}
-      cover={<img alt="example" src={course_thumnail} />}
+      cover={
+        <img
+          alt="example"
+          src={course_thumnail}
+          style={{
+            height: "158px",
+            objectFit: "cover",
+            overflow: "hidden",
+          }}
+        />
+      }
       onClick={() => handleClick(data?._id?._id || data._id)}
+      className="course-card"
     >
+      <div
+        style={{
+          width: "100%",
+          height: "56px",
+          overflow: "hidden",
+          fontSize: "1.1rem",
+          fontWeight: "bold",
+          color: "grey",
+          marginBottom: "1rem",
+        }}
+      >
+        <div
+          style={{
+            whiteSpace: "pre-wrap",
+            lineHeightL: "1.5",
+          }}
+        >
+          {data?._id?.course_name || data?.course_name}
+        </div>
+      </div>
+
       <Meta
-        title={
-          <Link
-            to="/newcourse"
-            style={{
-              fontWeight: "bold",
-              fontSize: "16px",
-              overflowWrap: "break-word",
-              wordWrap: "break-word",
-            }}
-          >
-            {data?._id?.course_name || data?.course_name}
-          </Link>
-        }
         description={
           <div>
             <div
@@ -50,7 +78,7 @@ const CourseCard = ({ data }) => {
                 marginBottom: "8px",
               }}
             >
-              {course_ratingsAverage || typeof data?.process_Course ==="number"  ? (
+              {course_ratingsAverage || data?.process_Course === "number" ? (
                 course_ratingsAverage ? (
                   <Rate
                     disabled
@@ -58,18 +86,24 @@ const CourseCard = ({ data }) => {
                     defaultValue={course_ratingsAverage}
                   />
                 ) : (
-                  <Progress percent={data?.process_Course*100} />
+                  <Progress percent={data?.process_Course * 100} />
                 )
-              ) : null}
+              ) : (
+                <Rate disabled allowHalf defaultValue={0} />
+              )}
             </div>
             <div
               style={{
+                fontSize: "16px",
                 display: "flex",
                 alignItems: "center",
-                marginBottom: "8px",
+                gap: "5px",
+                marginBottom: "10px",
+                marginLeft: "2px",
               }}
             >
-              {course_price ? <span>Giá: {course_price}</span> : null}
+              <FaUserEdit />
+              <div>{course_purchased}</div>
             </div>
             <div
               style={{
@@ -79,25 +113,48 @@ const CourseCard = ({ data }) => {
               }}
             >
               <Avatar
+                icon={<UserOutlined />}
                 src={
                   data?._id?.user_teacher?.user_avatar ||
                   data?.user_teacher?.user_avatar ||
-                  "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-5-150x150.jpg"
+                  null
                 }
               />
-              <span style={{ marginLeft: "8px" }}>
-                <Link to="/instructor/">
-                  {data?._id?.user_teacher?.user_name ||
-                    data?.user_teacher?.user_name}
-                </Link>
+              <span style={{ marginLeft: "8px", fontSize: "14px" }}>
+                {data?._id?.user_teacher?.user_name ||
+                  data?.user_teacher?.user_name}
               </span>
             </div>
-            <div style={{ marginRight: "7px", marginTop: "1rem" }}>
-              <Link to={`/newcourse`}>
-                <Button type="primary" size="large" block>
-                  Bắt đầu học
-                </Button>
-              </Link>
+            <div
+              style={{
+                marginRight: "7px",
+                marginTop: "1rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "15px",
+              }}
+            >
+              {course_price && (
+                <div
+                  style={{
+                    fontSize: "16px",
+                    color: "#4096ff",
+                    fontWeight: "500",
+                    marginLeft: "-10px",
+                  }}
+                >
+                  {formatPrice(course_price)} VND
+                </div>
+              )}
+              <Button
+                style={{ marginRight: "-13px" }}
+                type="primary"
+                size="large"
+                onClick={()=>handleClick}
+              >
+                Xem thêm
+              </Button>
             </div>
           </div>
         }

@@ -1,7 +1,16 @@
 import axios from "axios";
-// import useCustomNavigate from "../utils/useCustomNavigate";
 import { useNavigate } from "react-router-dom";
+
 const baseURL = "http://52.221.211.77:3000";
+
+// Hàm lấy thông tin user từ localStorage
+const getUserData = () => {
+  const jsonString = localStorage.getItem("user");
+  const user = JSON.parse(jsonString);
+  const accessToken = user?.accessToken;
+  const idUser = user?.metaData?._id;
+  return { accessToken, idUser };
+};
 
 const axiosClient = axios.create({
   baseURL,
@@ -9,10 +18,7 @@ const axiosClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-const jsonString = localStorage.getItem("user");
-const user = JSON.parse(jsonString);
-const accessToken = user?.accessToken;
-const idUser = user?.metaData?._id;
+
 // ------------------------------ login--------------------------------
 
 export const Login = {
@@ -21,12 +27,13 @@ export const Login = {
     const url = `/v1/api/user/login`;
     return axiosClient.post(url, data);
   },
-  getInfo: (idUser, token) => {
+  getInfo: () => {
+    const { accessToken, idUser } = getUserData();
     const url = `/v1/api/user/information`;
     return axiosClient.get(url, {
       headers: {
         "x-client-id": idUser,
-        "x-atoken-id": token,
+        "x-atoken-id": accessToken,
       },
     });
   },
@@ -49,6 +56,7 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 // ------------------------------ đăng ký--------------------------------
 
 export const register = async (user_name, user_email, user_password) => {
@@ -62,6 +70,7 @@ export const register = async (user_name, user_email, user_password) => {
     return console.log(error);
   }
 };
+
 export const activateUser = async (otpCode, activationToken) => {
   try {
     const data = { otpCode, activationToken };
@@ -91,6 +100,7 @@ export const getOneCourse = async (idOneCourse) => {
 
 export const getOneCourseMember = async (idOneCourse) => {
   try {
+    const { accessToken, idUser } = getUserData();
     const res = await axiosClient.get(
       `/v1/api/course/get-one-course/learn/${idOneCourse}`,
       {
@@ -106,10 +116,21 @@ export const getOneCourseMember = async (idOneCourse) => {
     return console.log(error);
   }
 };
+
 //----------------autoCall api-------------
+
 export const getCourseType = async () => {
+  const { accessToken, idUser } = getUserData();
   try {
-    const res = await axios.get(`${baseURL}/v1/api/course/get-all-course-type`);
+    const res = await axios.get(
+      `${baseURL}/v1/api/course/get-all-course-type`,
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
     // console.log(res);
     return res;
   } catch (error) {
@@ -118,9 +139,16 @@ export const getCourseType = async () => {
 };
 
 export const getAllCourses = async (page) => {
+  const { accessToken, idUser } = getUserData();
   try {
     const res = await axios.get(
-      `${baseURL}/v1/api/course//get-all-course?limit=9&page=${page}`
+      `${baseURL}/v1/api/course//get-all-course?limit=15&page=${page}`,
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
     );
     // console.log(res);
     return res;
@@ -128,13 +156,22 @@ export const getAllCourses = async (page) => {
     return null;
   }
 };
+
 //----------------autoCall api-------------
+
 export const getSearch = async (page, string, type) => {
+  const { accessToken, idUser } = getUserData();
   try {
     const res = await axios.get(
       `${baseURL}/v1/api/course/search?keySearch=${string}&type=${
         type || "course"
-      }&limit=8&page=${page}`
+      }&limit=15&page=${page}`,
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
     );
     // console.log(page, string, type);
     return res;
@@ -144,6 +181,7 @@ export const getSearch = async (page, string, type) => {
 };
 
 //---------------- get review
+
 export const ReviewsAPI = {
   getReview: (id, page) => {
     const url = `${baseURL}/v1/api/feedback/get-review/${id}?page=${page}&limit=5`;
@@ -193,6 +231,7 @@ export const ReviewsAPI = {
 
 export const upload = {
   uploadImg: (formData) => {
+    const { accessToken, idUser } = getUserData();
     const url = `${baseURL}/v1/api/upload-images`;
     return axios.post(
       url,
@@ -208,6 +247,7 @@ export const upload = {
     );
   },
   uploadVideo: (formData) => {
+    const { accessToken, idUser } = getUserData();
     const url = `${baseURL}/v1/api/upload-video`;
     return axios.post(
       url,
@@ -223,6 +263,7 @@ export const upload = {
     );
   },
   submitCourse: (objData) => {
+    const { accessToken, idUser } = getUserData();
     const url = `${baseURL}/v1/api/course/create-course`;
     console.log(objData);
     return axios.post(url, objData, {
@@ -240,6 +281,7 @@ export const Info = {
     return axios.get(`${baseURL}/v1/api/user/information-teacher/${id}`);
   },
   user: () => {
+    const { accessToken, idUser } = getUserData();
     return axios.get(`${baseURL}/v1/api/user/information`, {
       headers: {
         "x-client-id": idUser,
@@ -248,6 +290,7 @@ export const Info = {
     });
   },
   chargePass: (oldPass, newPass) => {
+    const { accessToken, idUser } = getUserData();
     return axios.patch(
       `${baseURL}/v1/api/user/update-password`,
       {
@@ -263,6 +306,7 @@ export const Info = {
     );
   },
   updatPrf: (obj) => {
+    const { accessToken, idUser } = getUserData();
     console.log(obj);
     return axios.patch(`${baseURL}/v1/api/user/update-profile`, obj, {
       headers: {
@@ -286,6 +330,7 @@ export const getInfoTeacher = async (id) => {
 
 export const CreateCourseData = {
   title: (id, title) => {
+    const { accessToken, idUser } = getUserData();
     console.log(id, title);
     return axios.post(
       `${baseURL}/v1/api/course/create-course-data/${id}`,
@@ -301,6 +346,7 @@ export const CreateCourseData = {
     );
   },
   createCourseVideo: (id, title, url, time) => {
+    const { accessToken, idUser } = getUserData();
     console.log(id, title, url, time);
     return axios.post(
       `${baseURL}/v1/api/course/create-course-video/${id}`,
@@ -321,6 +367,7 @@ export const CreateCourseData = {
 
 export const cart = {
   getCart: () => {
+    const { accessToken, idUser } = getUserData();
     return axios.get(`${baseURL}/v1/api/cart`, {
       headers: {
         "x-client-id": idUser,
@@ -329,6 +376,7 @@ export const cart = {
     });
   },
   addCart: (idCourse) => {
+    const { accessToken, idUser } = getUserData();
     return axios.post(`${baseURL}/v1/api/cart/${idCourse}`, null, {
       headers: {
         "x-client-id": idUser,
@@ -337,6 +385,7 @@ export const cart = {
     });
   },
   deleteCart: (idCourse) => {
+    const { accessToken, idUser } = getUserData();
     return axios.delete(`${baseURL}/v1/api/cart/${idCourse}`, {
       headers: {
         "x-client-id": idUser,
@@ -348,6 +397,7 @@ export const cart = {
 
 export const vnPay = {
   buy: (id) => {
+    const { accessToken, idUser } = getUserData();
     return axios.get(
       `${baseURL}/v1/api/create-order/payment/create_payment_url/${id}`,
       null,
@@ -360,6 +410,7 @@ export const vnPay = {
     );
   },
 };
+
 export const Course = {
   byTeacher: (id, page) => {
     return axios.get(
@@ -367,6 +418,7 @@ export const Course = {
     );
   },
   userEnrolled: () => {
+    const { accessToken, idUser } = getUserData();
     return axios.get(`${baseURL}/v1/api/user/get-purchased-course`, {
       headers: {
         "x-client-id": idUser,
@@ -378,6 +430,7 @@ export const Course = {
 
 export const Process = {
   upProcess: (idCourse, idVideo) => {
+    const { accessToken, idUser } = getUserData();
     return axios.post(
       `${baseURL}/v1/api/course/update-process-learn/${idCourse}`,
       {
@@ -392,8 +445,10 @@ export const Process = {
     );
   },
 };
+
 export const type = {
   addType: (textType) => {
+    const { accessToken, idUser } = getUserData();
     return axios.post(
       `${baseURL}/v1/api/course/create-type`,
       {
@@ -408,8 +463,10 @@ export const type = {
     );
   },
 };
+
 export const Question = {
   getQuestion: (idVideo) => {
+    const { accessToken, idUser } = getUserData();
     return axios.get(`${baseURL}/v1/api/feedback/get-question/${idVideo}`, {
       headers: {
         "x-client-id": idUser,
@@ -418,6 +475,7 @@ export const Question = {
     });
   },
   addQuestion: (idVideo, time, idCourse, text) => {
+    const { accessToken, idUser } = getUserData();
     return axios.post(
       `${baseURL}/v1/api/feedback/add-question/${idVideo}`,
       {
@@ -434,6 +492,7 @@ export const Question = {
     );
   },
   addAnwser: (idCm, text) => {
+    const { accessToken, idUser } = getUserData();
     return axios.post(
       `${baseURL}/v1/api/feedback/add-anwser/${idCm}`,
       {
