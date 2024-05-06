@@ -42,9 +42,9 @@ export default function () {
         <div className="instructor-section-headingbox">
           <div className="instructor-section-info-box">
             <div className="instructor-section-info-box2">
-              <div >
+              <div>
                 <Avatar
-                style={{border: '8px solid white'}}
+                  style={{ border: "8px solid white" }}
                   icon={<UserOutlined />}
                   src={
                     dataTeacher?.findTeacher?.user_avatar
@@ -76,11 +76,11 @@ export default function () {
           <h2 className="instructor-section-list-card-heading">Kinh nghiệm</h2>
           {dataTeacher?.findTeacher?.user_experience.map((item) => (
             <p className="instructor-section-list-card-subheading">
-              {item?.company}
+              <span style={{ color: "grey" }}>Công ty: </span> {item?.company}
               <br />
-              {item?.title}
+              <span style={{ color: "grey" }}>Vị trí: </span>{item?.title}
               <br />
-              {item?.description}
+              <span style={{ color: "grey" }}>Mô tả:</span> {item?.description}
               <br />
             </p>
           ))}

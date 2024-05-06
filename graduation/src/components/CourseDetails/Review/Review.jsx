@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReviewCard from "./ReviewCard";
 import { ReviewsAPI } from "../../../api/index";
-import { Button, message, Rate } from "antd";
+import { Button, Empty, message, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { getDataLocal } from "../../../utils/getLocalStorage";
 import { checkIdExists } from "../../../utils/findCoursePurchased";
@@ -67,12 +67,25 @@ export default function Review({ idCourse, isUserReview }) {
   // console.log(isUserReview);
   return (
     <div>
-      {data?.map((review) => (
-        <ReviewCard key={review._id} review={review} onReply={handleComment} />
-      ))}
+      {data?.lenght > 0 ? (
+        <>
+          {data?.map((review) => (
+            <ReviewCard
+              key={review._id}
+              review={review}
+              onReply={handleComment}
+            />
+          ))}
+        </>
+      ) : (
+        <div className="course-section-content-none">
+          <Empty description={false} />
+          Không có đánh giá!
+        </div>
+      )}
 
-      { isUserReview === false ? (
-        !showCommentInput ? (
+      {isUserReview === false &&
+        (!showCommentInput ? (
           <Button type="primary" onClick={handleCommentClick}>
             Đánh giá khóa học
           </Button>
@@ -96,8 +109,7 @@ export default function Review({ idCourse, isUserReview }) {
               Đánh giá
             </Button>
           </div>
-        )
-      ) : null}
+        ))}
     </div>
   );
 }

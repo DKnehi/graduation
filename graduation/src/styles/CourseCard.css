@@ -52,6 +52,10 @@
 }
 
 /* ------------- */
+.custom-hover-panel:hover {
+  background-color: lightblue;
+}
+
 .section-container-video-footer-course-content {
   margin-top: 30px;
 }

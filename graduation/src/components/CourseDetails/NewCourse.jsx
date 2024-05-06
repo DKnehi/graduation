@@ -14,9 +14,10 @@ import ReactPlayer from "react-player";
 import { convertToTime } from "../../utils/convertToTime";
 import CourseInfo from "./CourseInfo";
 import Review from "./Review/Review";
-import { Button, message, Rate } from "antd";
+import { Avatar, Button, message, Rate } from "antd";
 import { FaMoneyCheckDollar, FaGraduationCap, FaClock } from "react-icons/fa6";
 import { actionType } from "../../Context/reducer";
+import { UserOutlined } from "@ant-design/icons";
 
 export default function CourseDetail() {
   const [{ typeCourse, dataCourseLearn }, dispatch] = useStateValue();
@@ -117,28 +118,47 @@ export default function CourseDetail() {
         message.error("Lỗi giỏ hàng!");
       });
   };
-  console.log(dataOneCourse?.data?.is_user_review);
+  console.log(dataTeacher);
   return (
     <div>
       <section className="newcourse-section">
         <div className="newcourse-section-headingbox">
+          <Rate
+            disabled
+            allowHalf
+            value={dataOneCourse?.data?.course_ratingsAverage}
+          />
           <h2 className="newcourse-section-heading">
             {dataOneCourse?.data?.course_name}
           </h2>
         </div>
         <div className="newcourse-section-subheadingbox">
           <div className="newcourse-section-avatarbox">
-            <div className="newcourse-section-avatar">
+            <Avatar
+              icon={<UserOutlined />}
+              src={dataTeacher?.teacher_infor?.user_avatar || null}
+              size={50}
+            />
+            <p style={{ marginLeft: "16px" }}>Khóa học của</p>
+            <Link
+              style={{
+                marginLeft: "8px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                color: "black",
+              }}
+              to={`/instructor`}
+            >
+              {dataTeacher?.teacher_infor?.user_name}
+            </Link>
+            {/* <div className="newcourse-section-avatar">
               <img
                 className="newcourse-section-avatar"
                 src={dataTeacher?.findTeacher?.user_avatar}
                 alt=""
               />
-            </div>
-            <p>Khóa học của</p>
-            <Link to={`/instructor/${dataTeacher?.findTeacher?._id}`}>
-              {dataTeacher?.findTeacher?.user_name}
-            </Link>
+            </div> */}
+
             <p>Thể loại: {dataOneCourse?.data?.course_type?.type_name}</p>
           </div>
         </div>
@@ -146,8 +166,8 @@ export default function CourseDetail() {
           <div className="newcourse-section-video-box-dad">
             <div className="newcourse-section-video-box">
               <ReactPlayer
-                width="100%"
-                height="458px"
+                width={"100%"}
+                height={"600px"}
                 controls={true}
                 url={dataOneCourse?.data?.course_demoVideo}
                 light={dataOneCourse?.data?.course_thumnail}
@@ -155,18 +175,18 @@ export default function CourseDetail() {
             </div>
             <div className="newcourse-section-video-box-dad-content">
               <div className="newcourse-section-video-box-dad-content-heading">
-                <h2
+                <h3
                   onClick={() => handleButtonClick(1)}
                   className={activeButton === 1 ? "activeButtonNewCourse" : ""}
                 >
-                  Course Info
-                </h2>
-                <h2
+                  Chi tiết
+                </h3>
+                <h3
                   onClick={() => handleButtonClick(2)}
                   className={activeButton === 2 ? "activeButtonNewCourse" : ""}
                 >
-                  Reviews
-                </h2>
+                  Đánh giá
+                </h3>
               </div>
               <div style={{ padding: "25px 0" }}>
                 {activeButton === 1 && (
@@ -196,8 +216,9 @@ export default function CourseDetail() {
                   <Button
                     onClick={() => handelAddCart(initialIdCourseCard)}
                     type="primary"
+                    style={{fontWeight:'300'}}
                   >
-                    Thêm vào danh sách
+                    Thêm vào danh sách chờ
                   </Button>
                 )}
               </div>
@@ -221,14 +242,9 @@ export default function CourseDetail() {
                     {convertToTime(dataOneCourse?.data?.total_length_video)}
                   </div>
                 </div>
-                <Rate
-                  disabled
-                  allowHalf
-                  value={dataOneCourse?.data?.course_ratingsAverage}
-                />
               </div>
             </div>
-            <div className="newcourse-section-slide-box-avatar-box">
+            {/* <div className="newcourse-section-slide-box-avatar-box">
               <h2 className="newcourse-section-slide-box-avatar-box-heading">
                 A course by
               </h2>
@@ -245,7 +261,7 @@ export default function CourseDetail() {
                   <p>Desain grafis</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

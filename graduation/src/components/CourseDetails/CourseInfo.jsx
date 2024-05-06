@@ -19,13 +19,6 @@ import { getDataLocal } from "../../utils/getLocalStorage";
 const { Panel } = Collapse;
 
 export const CourseInfo = ({ data, handleReload }) => {
-
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleButtonClick = () => {
-    setIsVisible(!isVisible); // Đảo ngược trạng thái isVisible
-  };
-
   const [isOpenContentCourse, setIsOpenContentCourse] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
@@ -68,7 +61,8 @@ export const CourseInfo = ({ data, handleReload }) => {
 
   const inputFileRef = useRef(null);
 
-  const handleShowModal = () => {
+  const handleShowModal = (courseId) => {
+    setCourseId(courseId);
     setVisible(true);
   };
 
@@ -144,6 +138,8 @@ export const CourseInfo = ({ data, handleReload }) => {
         message.success("Form đã được gửi thành công!");
         handleReload();
         setVisible(false);
+        handleDeleteVideo();
+        setTileCourseVideo("");
       })
       .catch((error) => {
         console.error(error);
@@ -161,9 +157,12 @@ export const CourseInfo = ({ data, handleReload }) => {
   useEffect(() => {
     showButton();
   }, []);
-    useEffect(() => {
-      showButton();
-    }, [idUser?._id, data?.user_teacher]);
+  useEffect(() => {
+    showButton();
+  }, [idUser?._id, data?.user_teacher]);
+
+  const [courseId, setCourseId] = useState("");
+
   return (
     <div>
       <div className="newcourse-section-video-box-dad-content-main">
@@ -190,8 +189,8 @@ export const CourseInfo = ({ data, handleReload }) => {
         })}
 
         <div className="section-container-video-footer-course-content">
-          <h6>Nội dung bài học</h6>
-          {data?.course_data?.map((item) => (
+          <h2>Nội dung bài học</h2>
+          {/* {data?.course_data?.map((item) => (
             <div key={item?._id}>
               <div
                 onClick={() =>
@@ -232,7 +231,6 @@ export const CourseInfo = ({ data, handleReload }) => {
                           <div style={{ padding: "0 0.5rem" }}>
                             {convertToTime(content.video_length)}
                           </div>
-                          <IoEyeSharp />
                         </div>
                       </div>
                     ))}
@@ -242,75 +240,11 @@ export const CourseInfo = ({ data, handleReload }) => {
                       Thêm khóa video bài học
                     </Button>
                   )}
-
-                  <Modal
-                    title="Form điền thông tin"
-                    visible={visible}
-                    onCancel={handleCancel}
-                    footer={null}
-                  >
-                    <Form
-                      onFinish={() =>
-                        handleSubmit(
-                          item?._id,
-                          tileCourseVideo,
-                          urlVideo,
-                          timeVideo
-                        )
-                      }
-                    >
-                      <Form.Item
-                        name="title1"
-                        label="Tiêu đề"
-                        rules={[{ message: "Vui lòng nhập tiêu đề!" }]}
-                      >
-                        <Input
-                          onChange={(e) => setTileCourseVideo(e.target.value)}
-                          value={tileCourseVideo}
-                        />
-                      </Form.Item>
-                      <Form.Item label="Chọn video">
-                        <input
-                          ref={inputFileRef}
-                          type="file"
-                          accept="video/*"
-                          onChange={handleFileChange}
-                        />
-                      </Form.Item>
-                      {videoFile && (
-                        <Card title="Video xem trước" style={{ width: 300 }}>
-                          <video controls style={{ width: "100%" }}>
-                            <source
-                              src={URL.createObjectURL(videoFile)}
-                              type="video/mp4"
-                            />
-                            Your browser does not support the video tag.
-                          </video>
-                        </Card>
-                      )}
-                      <Form.Item>
-                        <Space>
-                          <Button
-                            loading={loadingVideo}
-                            type="primary"
-                            onClick={handleUpload}
-                          >
-                            Tải lên
-                          </Button>
-                          <Button onClick={handleDeleteVideo}>Xóa video</Button>
-                        </Space>
-                      </Form.Item>
-                      <Button type="primary" htmlType="submit">
-                        Gửi
-                      </Button>
-                    </Form>
-                  </Modal>
                 </div>
               )}
             </div>
-          ))}
-
-          {isOpenFormTitle && (
+          ))} */}
+          {/* {isOpenFormTitle && (
             <div className="">
               <input
                 type="text"
@@ -332,8 +266,164 @@ export const CourseInfo = ({ data, handleReload }) => {
             <Button onClick={handleClickNewTitle} type="primary">
               Thêm chủ đề học
             </Button>
-          )}
+          )} */}
+          <Space
+            direction="vertical"
+            style={{ width: "100%", margin: "23px 0" }}
+          >
+            {data?.course_data?.map((course) => (
+              <Collapse style={{ backgroundColor: "#eff1f6" }} size="large">
+                <Panel
+                  key={course._id}
+                  header={
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <span style={{ fontWeight: "300" }}>
+                        {course.courseData_title}
+                      </span>
+                      <span>
+                        Tổng time:{" "}
+                        {convertToTime(
+                          course.course_data_video.total_video_section
+                        )}
+                      </span>
+                    </div>
+                  }
+                >
+                  <div>
+                    {/* mapvideo */}
+                    {course.course_data_video.course_video.map((video) => (
+                      <div
+                        key={video._id}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                        // className="custom-hover-panel"
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: "10px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <IoVideocam
+                            style={{ fontSize: "25px", color: "#bdbfc3" }}
+                          />
+                          <div>{video.video_title}</div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          {convertToTime(video.video_length)}
+                          <IoEyeSharp
+                            style={{ fontSize: "20px", color: "#bdbfc3" }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    {/* mapquiz */}
+
+                    {/* button */}
+                    <div className="">
+                      <Button
+                        type="primary"
+                        onClick={() => handleShowModal(course._id)}
+                        style={{ marginTop: "10px", marginLeft: "10px" }}
+                      >
+                        Thêm video bài học
+                      </Button>
+                      <Button
+                        type="primary"
+                        // onClick={handleShowModal}
+                        style={{ marginTop: "10px", marginLeft: "10px" }}
+                      >
+                        Thêm bài test
+                      </Button>
+                    </div>
+                  </div>
+                </Panel>
+              </Collapse>
+            ))}
+          </Space>
         </div>
+
+        {/* Modal nằm bên ngoài vòng lặp */}
+        <Modal
+          title="Thêm video bài học"
+          visible={visible}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <Form
+            onFinish={() =>
+              handleSubmit(courseId, tileCourseVideo, urlVideo, timeVideo)
+            }
+          >
+            <Form.Item
+              name="title1"
+              label="Tiêu đề"
+              rules={[{ message: "Vui lòng nhập tiêu đề!" }]}
+            >
+              <Input
+                onChange={(e) => setTileCourseVideo(e.target.value)}
+                value={tileCourseVideo}
+              />
+            </Form.Item>
+            <Form.Item label="Chọn video">
+              <input
+                ref={inputFileRef}
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+              />
+            </Form.Item>
+            {videoFile && (
+              <Card title="Video xem trước" style={{ width: 300 }}>
+                <video controls style={{ width: "100%" }}>
+                  <source
+                    src={URL.createObjectURL(videoFile)}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              </Card>
+            )}
+            <Form.Item>
+              <Space>
+                <Button
+                  loading={loadingVideo}
+                  type="primary"
+                  onClick={handleUpload}
+                >
+                  Tải lên
+                </Button>
+                <Button onClick={handleDeleteVideo}>Xóa video</Button>
+              </Space>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Gửi
+            </Button>
+          </Form>
+        </Modal>
+        {buttonVissible && (
+          <Button onClick={handleClickNewTitle} type="primary">
+            Thêm chủ đề học
+          </Button>
+        )}
       </div>
     </div>
   );
