@@ -111,11 +111,11 @@ export default function CourseDetail() {
       .addCart(id)
       .then((data) => {
         console.log(data);
-        message.success("giỏ hàng!");
+        message.success("Thêm thành công!");
       })
       .catch((error) => {
         console.error(error);
-        message.error("Lỗi giỏ hàng!");
+        message.error("Đã tồn tại trong danh sách!");
       });
   };
   console.log(dataTeacher);
@@ -216,7 +216,7 @@ export default function CourseDetail() {
                   <Button
                     onClick={() => handelAddCart(initialIdCourseCard)}
                     type="primary"
-                    style={{fontWeight:'300'}}
+                    style={{ fontWeight: "300" }}
                   >
                     Thêm vào danh sách chờ
                   </Button>
@@ -224,19 +224,19 @@ export default function CourseDetail() {
               </div>
               <div className="newcourse-section-slide-box-content-box">
                 <div className="newcourse-section-ranking">
-                  <FaMoneyCheckDollar />
+                  <FaMoneyCheckDollar style={{ color: "bdbfc3" }} />
                   <div>
                     {formatPrice(dataOneCourse?.data?.course_price)} VND
                   </div>
                 </div>
                 <div className="newcourse-section-ranking">
-                  <FaGraduationCap />
+                  <FaGraduationCap style={{ color: "bdbfc3" }} />
                   <div>
                     {dataOneCourse?.data?.course_purchased} người đăng ký
                   </div>
                 </div>
                 <div className="newcourse-section-ranking">
-                  <FaClock />
+                  <FaClock style={{ color: "bdbfc3" }} />
                   <div>
                     Tổng thời gian{" "}
                     {convertToTime(dataOneCourse?.data?.total_length_video)}

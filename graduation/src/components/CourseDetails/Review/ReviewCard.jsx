@@ -29,9 +29,11 @@ const ReviewCard = ({ review, onReply }) => {
       <Meta
         avatar={
           <Avatar
+          size={50}
             src={
               review?.userId?.user_avatar ||
               "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-3-150x150.jpg"
+              
             }
           />
         }
@@ -44,13 +46,13 @@ const ReviewCard = ({ review, onReply }) => {
               <Rate disabled defaultValue={review?.review_rating} />
             )}
 
-            <Text style={{ marginLeft: "2rem" }}>{review?.review_comment}</Text>
+            <Text style={{ marginLeft: "2rem",fontSize:'17px'  }}>{review?.review_comment}</Text>
             <br />
             <Text type="secondary">
               {moment(review?.createdAt).format("DD/MM/YYYY")}
             </Text>
             <br />
-            <p style={{ marginBottom: "1rem" }}>Câu trả lời :</p>
+            <p style={{ marginBottom: "1rem",fontSize:'17px' }}>Câu trả lời :</p>
             {review?.reply_comment?.map((reply) => (
               <CardReply key={reply._id} reply={reply} />
             )) ||

@@ -232,11 +232,7 @@ export default function () {
         bình luận video
         <div>
           {data?.map((item) => (
-            <ReviewCard
-              key={item._id}
-              review={item}
-              onReply={handleComment}
-            />
+            <ReviewCard key={item._id} review={item} onReply={handleComment} />
           ))}
 
           {!showCommentInput ? (

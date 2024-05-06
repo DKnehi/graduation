@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function Test() {
     return (
@@ -33,5 +33,7 @@ export default function Test() {
                 </div>
             </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

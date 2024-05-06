@@ -1,31 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CartCard from "./CartCard";
 import { getDataLocal } from "../utils/getLocalStorage";
 import { cart, vnPay } from "../api";
-import { message } from "antd";
-
-// Function xử lý thanh toán
-async function postOrderToServer(orderInfo) {
-  try {
-    const response = await fetch("/api/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(orderInfo),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      // Chuyển hướng khách hàng về trang thanh toán
-      window.location.href = result.vnp_ReturnUrl;
-    } else {
-      console.error("Error posting order:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error posting order:", error);
-  }
-}
+import { Empty, message } from "antd";
+import { Route, useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const [dataCart, setdataCart] = useState(null);
@@ -49,7 +27,7 @@ export default function Cart() {
         message.error("Lỗi giỏ hàng!");
       });
   };
-
+  const navigate = useNavigate();
   const [dataItemCart, setdataItemCart] = useState();
 
   const handelGetDataItem = (data) => {
@@ -62,19 +40,18 @@ export default function Cart() {
       .then((data) => {
         console.log(data.data.data);
         // Xử lý thanh toán khi nhận được URL từ vnPay.buy
-        if (data?.data?.data) {
-          postOrderToServer({
-            // Gửi các thông tin về đơn hàng lên server
-            courseId: id,
-            price: dataItemCart?.courseShema?.course_price,
-            // Thêm các thông tin khác về đơn hàng nếu cần
-          });
-        }
+        window.open(data.data.data, "_blank");
       })
       .catch((error) => {
         console.error(error);
-        message.error("mua lỗi rồi em nhé!");
+        message.error("Không thể thực hiện!");
       });
+  };
+  const formatPrice = (price) => {
+    if (typeof price !== "undefined" && price !== null) {
+      return price.toLocaleString("vi-VN");
+    }
+    return "";
   };
 
   return (
@@ -83,17 +60,22 @@ export default function Cart() {
         <div className="cart-content">
           <h2>Danh sách khóa học muốn mua</h2>
           <div className="cart-content-list">
-            {dataCart?.length === 0
-              ? "Giỏ hàng trống"
-              : dataCart?.map((item) => (
-                  <div onClick={() => handelGetDataItem(item)}>
-                    <CartCard
-                      key={item._id}
-                      dataCart={item}
-                      handelReload={handelReload}
-                    />
-                  </div>
-                ))}
+            {dataCart?.length === 0 ? (
+              <div className="course-section-content-none">
+                <Empty description={false} />
+                Danh sách trống!
+              </div>
+            ) : (
+              dataCart?.map((item) => (
+                <div className="" onClick={() => handelGetDataItem(item)}>
+                  <CartCard
+                    key={item._id}
+                    dataCart={item}
+                    handelReload={handelReload}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="summary-content">
@@ -101,7 +83,7 @@ export default function Cart() {
           <div className="summary-box">
             <div className="summary-first">
               <p>Tổng tiền</p>
-              <p>{dataItemCart?.courseShema?.course_price}</p>
+              <p>{formatPrice(dataItemCart?.courseShema?.course_price)}</p>
             </div>
             <div>
               <button

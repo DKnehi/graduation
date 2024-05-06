@@ -398,7 +398,7 @@ export const cart = {
 export const vnPay = {
   buy: (id) => {
     const { accessToken, idUser } = getUserData();
-    return axios.get(
+    return axios.post(
       `${baseURL}/v1/api/create-order/payment/create_payment_url/${id}`,
       null,
       {
@@ -497,6 +497,32 @@ export const Question = {
       `${baseURL}/v1/api/feedback/add-anwser/${idCm}`,
       {
         answser_comment: text,
+      },
+      {
+        headers: {
+          "x-client-id": idUser,
+          "x-atoken-id": accessToken,
+        },
+      }
+    );
+  },
+};
+
+export const getAll = {
+  teacher: (page) => {
+    // const { accessToken, idUser } = getUserData();
+    return axios.get(
+      `${baseURL}/v1/api/course/get-all-teacher?limit=15&page=${page}`
+    );
+  },
+};
+export const Quizz = {
+  addQuizz: (idCm, text) => {
+    const { accessToken, idUser } = getUserData();
+    return axios.post(
+      `${baseURL}/v1/api/quiz/create-quiz/${idCm}`,
+      {
+        quiz_title: text,
       },
       {
         headers: {

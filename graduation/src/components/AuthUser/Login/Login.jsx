@@ -11,10 +11,10 @@ export default function Login() {
 
   const onFinish = async () => {
     try {
-      setLoading(true);l
+      setLoading(true);
       const res = await loginApi.login(username, password);
       localStorage.setItem("user", JSON.stringify(res.data));
-      await getUserInfo(res?.data?.metaData?._id, res?.data?.accessToken);
+      await getUserInfo();
       message.success("Đăng nhập thành công!");
       setLoading(false);
       navigate("/");
@@ -25,9 +25,9 @@ export default function Login() {
     }
   };
 
-  const getUserInfo = async (idUser, accessToken) => {
+  const getUserInfo = async () => {
     try {
-      const res = await loginApi.getInfo(idUser, accessToken);
+      const res = await loginApi.getInfo();
       localStorage.setItem("userInfo", JSON.stringify(res.data));
     } catch (error) {
       return error;
