@@ -15,6 +15,7 @@
 @import url(./Dashboard/EnrolledCourse.css);
 @import url(./CreateCourse.css);
 @import url(./Footer.css);
+@import url(./Test.css);
 
 body {
   margin: 0;
@@ -33,4 +34,5 @@ code {
   --color-primary:  #246BFD;
   --color-second:#677BA2;
   --color-line-boder: #CDCFD5;
+  --color-boder: #CDCFD5;
 }
