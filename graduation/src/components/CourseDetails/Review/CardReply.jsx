@@ -12,6 +12,7 @@ const CardReply = ({ reply }) => {
       <Meta
         avatar={
           <Avatar
+          size={50}
             src={
               reply?.userId?.user_avatar ||
               "https://demo.themeum.com/tutor/wp-content/uploads/2022/02/Avatar-3-150x150.jpg"
@@ -21,7 +22,7 @@ const CardReply = ({ reply }) => {
         title={reply.userId.user_name}
         description={
           <>
-            <Text>{reply?.reply_comment || reply?.answser_comment}</Text>
+            <Text style={{fontSize:'17px'}}>{reply?.reply_comment || reply?.answser_comment}</Text>
             <br />
             <Text type="secondary">
               {moment(reply.createdAt).format("DD/MM/YYYY")}

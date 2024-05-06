@@ -94,7 +94,7 @@ export default function Header() {
             />
           </div>
         </nav>
-        <div style={{  width: "auto" }}>
+        <div style={{ width: "auto" }}>
           {stateLogin ? (
             <Dropdown overlay={menu} placement="bottomRight">
               <div>

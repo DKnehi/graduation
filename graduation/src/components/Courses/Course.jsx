@@ -3,7 +3,7 @@ import { Button, Checkbox, Empty, Input, Select } from "antd";
 import CourseCard from "./CourseCard";
 import Pagination from "./Pagination";
 import { useParams } from "react-router-dom";
-import { getAllCourses, getSearch } from "../../api";
+import { getAll, getAllCourses, getSearch } from "../../api";
 import { useStateValue } from "../../Context/StateProvider";
 import TeacherCard from "./TeacherCard";
 
@@ -23,13 +23,29 @@ export default function () {
     if (search) {
       getCourseSearch(currentPage, search, type);
     } else {
-      if (search === "" && type === "mentor") {
-        getCourseSearch(currentPage, "", type);
-      } else {
-        getCourse(currentPage);
-      }
+      getData();
     }
   }, [currentPage, search, type]);
+
+  const getData = () => {
+    if (type === "mentor") {
+      getAllTeacher(currentPage);
+    } else {
+      getCourse(currentPage);
+    }
+  };
+
+  const getAllTeacher = (currentPage) => {
+    getAll
+      .teacher(currentPage)
+      .then((response) => {
+        console.log(response?.data?.data);
+        setData(response.data.data);
+      })
+      .catch(() => {
+        return null;
+      });
+  };
 
   const getCourse = async (currentPage) => {
     try {
@@ -47,7 +63,7 @@ export default function () {
       return null;
     }
   };
-  console.log(type);
+  console.log(data);
   return (
     <div>
       <section className="course-section">
@@ -76,7 +92,6 @@ export default function () {
           </div>
           <div className="app-container">
             {type === "course" ? (
-              
               <div className="item-list">
                 {data.length > 0 ? (
                   <div className="course-section-content-list-card">

@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #bdbfc3;
     padding-bottom: 50px;
 }
 .dashboard-heading-img-box {
@@ -20,6 +20,7 @@
     margin-right: 20px;
 }
 .create-course-btn {
+    width: 409px;
     padding: 10px 20px;
     border: 1px solid var(--color-primary);
     border-radius: 7px;
@@ -38,6 +39,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding-top: 30px;
+
 }
 .dashboard-list-menu button {
     width: 98.5%;
@@ -67,18 +69,21 @@
 @media (min-width: 768px) {
     .dashboard {
         padding: 30px 60px;
+        min-height: 100vh;
+
     }
     .dashboard-section {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
     }
     .dashboard-list-menu {
-        border-right: 1px solid gray;
+        /* border-right: 1px solid #bdbfc3; */
     }
 }
 
 @media (min-width: 1024px) {
     .dashboard {
+        min-height: 100vh;
         padding: 60px 120px;
     }
 }
