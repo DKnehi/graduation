@@ -1,0 +1,74 @@
+
+.lesson-test {
+    grid-column: 2/5;
+    padding: 100px;
+}
+.lesson-section-test {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.lesson-test-heading {
+    display: flex;
+    gap: 18px;
+}
+.lesson-test-heading p {
+    font-size: 20px;
+}
+.lesson-test-heading h1 {
+    font-size: 20px;
+    margin-right: 40px;
+}
+
+.answer-options {
+    display: flex;
+    gap: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px solid gray;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    width: 100%;
+    border: 1px solid var(--color-boder);
+}
+.option-text {
+    font-size: 18px;
+    color: var(--color-second);
+    font-weight: 550;
+}
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 10px;
+    appearance: none; /* Ẩn giao diện mặc định của radio button */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Hình tròn */
+    border: 2px solid var(--color-boder); /* Viền ngoài */
+    transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi */
+}
+
+/* Thay đổi màu của radio button khi được chọn */
+input[type="radio"]:checked {
+    border-color: var(--color-primary); /* Màu viền khi radio được chọn */
+    background-color: white; /* Màu nền khi radio được chọn */
+    border: 8px solid var(--color-primary);
+}
+
+.test-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+.test-button button {
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+

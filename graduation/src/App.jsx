@@ -19,6 +19,7 @@ import NewCourse from "./components/CourseDetails/NewCourse";
 import Lesson from "./components/Lesson";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateCourse from "./components/Dashboard/CreateCourse";
+import Test from "./components/Layout/Test";
 
 const publicRoutes = [
   { path: "/", component: Main },
@@ -35,6 +36,7 @@ const publicRoutes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/createcourse", component: CreateCourse },
   { path: "/lesson", component: Lesson },
+  { path: "/test", component: Test },
 ];
 
 function App() {
