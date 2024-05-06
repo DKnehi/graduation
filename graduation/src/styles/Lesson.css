@@ -69,3 +69,14 @@
 @media (min-width: 1025px) {
     
 }
+
+.content {
+    display: block; /* Hiển thị phần tử */
+  }
+  
+  .hidden {
+    display: none; /* Ẩn phần tử */
+  }
+.lesson-section-video {
+    grid-row: 2/5;
+}
