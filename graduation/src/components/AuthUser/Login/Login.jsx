@@ -11,7 +11,7 @@ export default function Login() {
 
   const onFinish = async () => {
     try {
-      setLoading(true);l
+      setLoading(true);
       const res = await loginApi.login(username, password);
       localStorage.setItem("user", JSON.stringify(res.data));
       await getUserInfo(res?.data?.metaData?._id, res?.data?.accessToken);
