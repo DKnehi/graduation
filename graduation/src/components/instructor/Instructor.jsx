@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../Courses/CourseCard";
 import { Course, Info } from "../../api";
-import { Avatar, message } from "antd";
+import { Avatar, Empty, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 export default function () {
@@ -47,8 +47,8 @@ export default function () {
                   style={{ border: "8px solid white" }}
                   icon={<UserOutlined />}
                   src={
-                    dataTeacher?.findTeacher?.user_avatar
-                      ? dataTeacher?.findTeacher?.user_avatar
+                    dataTeacher?.teacher_infor?.user_avatar
+                      ? dataTeacher?.teacher_infor?.user_avatar
                       : null
                   }
                   size={200}
@@ -56,7 +56,7 @@ export default function () {
               </div>
               <div className="info-box-name">
                 <h1 className="info-box-name-heading">
-                  {dataTeacher?.findTeacher?.user_name}
+                  {dataTeacher?.teacher_infor?.user_name}
                 </h1>
                 <p className="info-box-name-subheading">
                   {dataTeacher?.total_stuent} Khóa học •{" "}
@@ -71,33 +71,37 @@ export default function () {
             Giới thiệu về giảng viên
           </h2>
           <p className="instructor-section-list-card-subheading">
-            {dataTeacher?.findTeacher?.user_about}
+            {dataTeacher?.teacher_infor?.user_about}
           </p>
           <h2 className="instructor-section-list-card-heading">Kinh nghiệm</h2>
-          {dataTeacher?.findTeacher?.user_experience.map((item) => (
+          {dataTeacher?.teacher_infor?.user_experience.map((item) => (
             <p className="instructor-section-list-card-subheading">
               <span style={{ color: "grey" }}>Công ty: </span> {item?.company}
               <br />
-              <span style={{ color: "grey" }}>Vị trí: </span>{item?.title}
+              <span style={{ color: "grey" }}>Vị trí: </span>
+              {item?.title}
               <br />
               <span style={{ color: "grey" }}>Mô tả:</span> {item?.description}
               <br />
             </p>
           ))}
-
           <h2 className="instructor-section-list-card-heading">Course</h2>
           <div className="instructor-section-list-card2">
-            {dataCourse.length > 0 ? (
+            {dataCourse.length > 0 && (
               <div className="course-section-content-list-card">
                 {dataCourse.map((item) => (
                   <CourseCard key={item?._id} data={item} />
                 ))}
               </div>
-            ) : (
-              <div>Không có khóa học</div>
             )}
             {/* <CourseCard data={dataCourse}></CourseCard> */}
           </div>
+          {dataCourse && dataCourse?.length == 0 && (
+            <div className="course-section-content-none">
+              <Empty description={false} />
+              <p>Không có khóa học!</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

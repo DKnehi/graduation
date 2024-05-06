@@ -13,9 +13,10 @@ import {
 import { convertToTime } from "../../utils/convertToTime";
 
 import { IoVideocam, IoEyeSharp } from "react-icons/io5";
-import { CreateCourseData, upload } from "../../api";
+import { CreateCourseData, Quizz, upload } from "../../api";
 import { getDataLocal } from "../../utils/getLocalStorage";
-
+import { IoMdInformationCircle } from "react-icons/io";
+import { IoDocumentText } from "react-icons/io5";
 const { Panel } = Collapse;
 
 export const CourseInfo = ({ data, handleReload }) => {
@@ -153,21 +154,45 @@ export const CourseInfo = ({ data, handleReload }) => {
       setbuttonVissible(true);
     }
   };
-  console.log(idUser?._id, data?.user_teacher);
-  useEffect(() => {
-    showButton();
-  }, []);
+  // console.log(idUser?._id, data?.user_teacher);
+  // useEffect(() => {
+  //   showButton();
+  // }, []);
   useEffect(() => {
     showButton();
   }, [idUser?._id, data?.user_teacher]);
 
   const [courseId, setCourseId] = useState("");
 
+  const [isOpenTestModal, setIsOpenTestModal] = useState(false);
+  const handleCloseTestModal = () => {
+    setIsOpenTestModal(false);
+  };
+  const handleOpenTestModal = (courseId) => {
+    setIsOpenTestModal(true);
+    setCourseId(courseId);
+  };
+
+  const handleSubmitTitle2 = async (courseId, title) => {
+    try {
+      await Quizz.addQuizz(courseId, title);
+      handleReload();
+      setTitle("");
+      setIsOpenTestModal(false);
+      message.success("Thêm tiêu đề thành công!");
+    } catch (error) {
+      console.log(error);
+      message.error("Thêm tiêu đề thất bại!");
+    }
+  };
+  const [openAddQuizz, setopenAddQuizz] = useState(false);
   return (
     <div>
       <div className="newcourse-section-video-box-dad-content-main">
         <h2>Mô tả khóa học</h2>
-        <p style={{ margin: "1rem" }}>{data?.course_description}</p>
+        <p style={{ margin: "1rem", lineHeight: "1.5" }}>
+          {data?.course_description}
+        </p>
 
         <h2 style={{ marginTop: "25px" }}>Lợi ích của khóa học</h2>
         {data?.course_benefits.map((item) => {
@@ -190,83 +215,6 @@ export const CourseInfo = ({ data, handleReload }) => {
 
         <div className="section-container-video-footer-course-content">
           <h2>Nội dung bài học</h2>
-          {/* {data?.course_data?.map((item) => (
-            <div key={item?._id}>
-              <div
-                onClick={() =>
-                  handleSectionClick(
-                    item?._id,
-                    tileCourseVideo,
-                    urlVideo,
-                    timeVideo
-                  )
-                }
-                className="section-container-video-footer-course-content-array"
-              >
-                {item?.courseData_title}
-                <i
-                  className={`fa-solid fa-chevron-${
-                    isOpenContentCourse && selectedItemId === item?._id
-                      ? "down"
-                      : "right"
-                  }`}
-                ></i>
-              </div>
-
-              {openSections[item?._id] && (
-                <div className="">
-                  <div className="section-container-video-footer-course-second-content-array">
-                    {item?.course_data_video?.course_video?.map((content) => (
-                      <div
-                        key={content?._id}
-                        className="section-container-video-footer-course-second-content-array-arrl"
-                      >
-                        <div className="section-container-video-footer-course-second-content-array-arrl-logo">
-                          <IoVideocam />
-                          <div style={{ margin: "0 1rem" }}>
-                            {content.video_title}
-                          </div>
-                        </div>
-                        <div className="section-container-video-footer-course-second-content-array-arrl-eye">
-                          <div style={{ padding: "0 0.5rem" }}>
-                            {convertToTime(content.video_length)}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {buttonVissible && (
-                    <Button type="primary" onClick={handleShowModal}>
-                      Thêm khóa video bài học
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          ))} */}
-          {/* {isOpenFormTitle && (
-            <div className="">
-              <input
-                type="text"
-                name="courseData_title"
-                placeholder="Nhập tiêu đề"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <Button
-                type="primary"
-                onClick={() => handleSubmitTitle(data?._id, title)}
-              >
-                Tạo
-              </Button>
-              <Button onClick={handleClickNewTitle}>Hủy</Button>
-            </div>
-          )}
-          {buttonVissible && (
-            <Button onClick={handleClickNewTitle} type="primary">
-              Thêm chủ đề học
-            </Button>
-          )} */}
           <Space
             direction="vertical"
             style={{ width: "100%", margin: "23px 0" }}
@@ -336,24 +284,66 @@ export const CourseInfo = ({ data, handleReload }) => {
                       </div>
                     ))}
                     {/* mapquiz */}
-
+                    {course.course_data_quiz.map((quiz) => (
+                      <div className="">
+                        <div
+                          key={quiz._id}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                          // className="custom-hover-panel"
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              gap: "10px",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <IoDocumentText
+                              style={{ fontSize: "25px", color: "#bdbfc3" }}
+                            />
+                            <div>{quiz.quiz_Tile}</div>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
+                            <IoMdInformationCircle
+                              style={{ fontSize: "20px", color: "#bdbfc3" }}
+                            />
+                          </div>
+                        </div>
+                        <Button>Thêm </Button>
+                      </div>
+                    ))}
                     {/* button */}
-                    <div className="">
-                      <Button
-                        type="primary"
-                        onClick={() => handleShowModal(course._id)}
-                        style={{ marginTop: "10px", marginLeft: "10px" }}
-                      >
-                        Thêm video bài học
-                      </Button>
-                      <Button
-                        type="primary"
-                        // onClick={handleShowModal}
-                        style={{ marginTop: "10px", marginLeft: "10px" }}
-                      >
-                        Thêm bài test
-                      </Button>
-                    </div>
+                    {buttonVissible && (
+                      <div className="">
+                        <Button
+                          type="primary"
+                          onClick={() => handleShowModal(course._id)}
+                          style={{ marginTop: "10px", marginLeft: "10px" }}
+                        >
+                          Thêm video bài học
+                        </Button>
+                        <Button
+                          type="primary"
+                          onClick={() => handleOpenTestModal(course._id)}
+                          style={{ marginTop: "10px", marginLeft: "10px" }}
+                        >
+                          Thêm bài test
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </Panel>
               </Collapse>
@@ -419,6 +409,58 @@ export const CourseInfo = ({ data, handleReload }) => {
             </Button>
           </Form>
         </Modal>
+        <Modal
+          title="Thêm bài test"
+          visible={isOpenTestModal}
+          onCancel={handleCloseTestModal}
+          footer={[
+            <Button key="cancel" onClick={handleCloseTestModal}>
+              Hủy
+            </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              onClick={() => handleSubmitTitle2(courseId, title)}
+            >
+              Tạo
+            </Button>,
+          ]}
+        >
+          <Input
+            type="text"
+            name="course_data_quiz_title"
+            placeholder="Nhập tiêu đề bài test"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </Modal>
+        {isOpenFormTitle && (
+          <Modal
+            title="Tạo tiêu đề"
+            visible={isOpenFormTitle}
+            onCancel={handleClickNewTitle}
+            footer={[
+              <Button key="cancel" onClick={handleClickNewTitle}>
+                Hủy
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
+                onClick={() => handleSubmitTitle(data?._id, title)}
+              >
+                Tạo
+              </Button>,
+            ]}
+          >
+            <Input
+              type="text"
+              name="courseData_title"
+              placeholder="Nhập tiêu đề"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Modal>
+        )}
         {buttonVissible && (
           <Button onClick={handleClickNewTitle} type="primary">
             Thêm chủ đề học

@@ -3,7 +3,7 @@ import React from 'react'
 export default function ComponentDashboard() {
   return (
     <div>
-      <h2 style={{fontSize:'26px', fontWeight:'500', color:'var(--color-second)'}}>Dashboard</h2>
+      {/* <h2 style={{fontSize:'26px', fontWeight:'500', color:'var(--color-second)'}}>Dashboard</h2> */}
       <div className='dashboard-list-item'>
         <div className='dashboard-detail-item'>
         <i class="fa-solid fa-book-open"></i>

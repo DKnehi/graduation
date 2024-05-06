@@ -24,8 +24,8 @@ const CourseCard = ({ data }) => {
     }
     return "";
   };
+
   return (
-    
     <Card
       classNames="course-card"
       style={{
@@ -78,33 +78,36 @@ const CourseCard = ({ data }) => {
                 marginBottom: "8px",
               }}
             >
-              {course_ratingsAverage || data?.process_Course === "number" ? (
-                course_ratingsAverage ? (
+              {course_ratingsAverage != undefined &&
+                (course_ratingsAverage > 0 ? (
                   <Rate
                     disabled
                     allowHalf
                     defaultValue={course_ratingsAverage}
                   />
                 ) : (
-                  <Progress percent={data?.process_Course * 100} />
-                )
-              ) : (
-                <Rate disabled allowHalf defaultValue={0} />
+                  <Rate disabled allowHalf defaultValue={0} />
+                ))}
+              {data?.process_Course >= 0 && (
+                <Progress percent={Math.round(data?.process_Course * 100)} />
               )}
             </div>
-            <div
-              style={{
-                fontSize: "16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                marginBottom: "10px",
-                marginLeft: "2px",
-              }}
-            >
-              <FaUserEdit />
-              <div>{course_purchased}</div>
-            </div>
+            {course_purchased != undefined && (
+              <div
+                style={{
+                  fontSize: "16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  marginBottom: "10px",
+                  marginLeft: "2px",
+                }}
+              >
+                <FaUserEdit />
+                <div>{course_purchased}</div>
+              </div>
+            )}
+
             <div
               style={{
                 display: "flex",
@@ -151,7 +154,7 @@ const CourseCard = ({ data }) => {
                 style={{ marginRight: "-13px" }}
                 type="primary"
                 size="large"
-                onClick={()=>handleClick}
+                onClick={() => handleClick}
               >
                 Xem thêm
               </Button>

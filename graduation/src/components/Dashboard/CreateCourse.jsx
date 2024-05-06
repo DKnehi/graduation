@@ -4,6 +4,7 @@ import { Button, Form, Input, message, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { getCourseType, type, upload } from "../../api";
 import { actionType } from "../../Context/reducer";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 export default function CreateCourse() {
@@ -140,7 +141,7 @@ export default function CreateCourse() {
   const isFormValid = () => {
     return Object.values(course).every((value) => value !== "");
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isFormValid()) {
@@ -151,11 +152,16 @@ export default function CreateCourse() {
         .submitCourse(course)
         .then((response) => {
           console.log(response);
-          message.success("Upload thành công");
+          message.success("Tạo khóa học thành công");
+          setCourse((prevCourse) => ({
+            ...prevCourse,
+            course_thumnail: response?.data?.data,
+          }));
+          navigate(-1);
         })
         .catch((error) => {
           console.error(error);
-          message.error("Upload lỗi");
+          message.error("Tạo lỗi");
         })
         .finally(() => {});
     }
@@ -271,12 +277,19 @@ export default function CreateCourse() {
                 />
               </div>
             ))}
-            <button
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => handleAddInput("course_benefits")}
+            >
+              Thêm lợi ích
+            </Button>
+            {/* <button
               type="button"
               onClick={() => handleAddInput("course_benefits")}
             >
               Thêm
-            </button>
+            </button> */}
             <p>Nội dung khóa học</p>
             {course.course_lessonContent.map((lesson, index) => (
               <div key={index}>
@@ -290,12 +303,19 @@ export default function CreateCourse() {
                 />
               </div>
             ))}
-            <button
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => handleAddInput("course_lessonContent")}
+            >
+              Thêm nội dung khóa học
+            </Button>
+            {/* <button
               type="button"
               onClick={() => handleAddInput("course_lessonContent")}
             >
               Thêm
-            </button>
+            </button> */}
 
             <p>Giá khóa học</p>
             <input
@@ -345,8 +365,11 @@ export default function CreateCourse() {
               />
             )}
           </div>
+          <Button type="primary" htmlType="submit" size="large" style={{width:'100%',marginTop:'30px'}}>
+            Tạo khóa học
+          </Button>
+          {/* <button type="submit">Tạo khóa học</button> */}
         </div>
-        <button type="submit">Tạo khóa học</button>
       </form>
     </div>
   );

@@ -67,9 +67,9 @@ export default function Review({ idCourse, isUserReview }) {
   // console.log(isUserReview);
   return (
     <div>
-      {data?.lenght > 0 ? (
+      {data && data.length > 0 ? (
         <>
-          {data?.map((review) => (
+          {data.map((review) => (
             <ReviewCard
               key={review._id}
               review={review}
@@ -80,7 +80,7 @@ export default function Review({ idCourse, isUserReview }) {
       ) : (
         <div className="course-section-content-none">
           <Empty description={false} />
-          Không có đánh giá!
+          <p>Không có đánh giá!</p>
         </div>
       )}
 

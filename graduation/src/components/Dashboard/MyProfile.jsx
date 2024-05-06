@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Info, upload } from "../../api";
 import { message, Input, Button, Avatar, Modal, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { Login as loginApi } from "../../api/index";
 
 export default function MyProfile() {
   const [userData, setUserData] = useState(null);
@@ -42,6 +43,7 @@ export default function MyProfile() {
           ...prevUserData,
           ...tempUserData,
         }));
+        getUserInfo();
         message.success("Cập nhật thông tin thành công");
       })
       .catch((error) => {
@@ -116,6 +118,15 @@ export default function MyProfile() {
     });
   };
 
+  const getUserInfo = async () => {
+    try {
+      const res = await loginApi.getInfo();
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
+      window.location.reload();
+    } catch (error) {
+      return error;
+    }
+  };
   return (
     <div>
       <label>
@@ -132,48 +143,55 @@ export default function MyProfile() {
         ></Upload>
       </label>
       <br />
-      <label>
+      <div>
         Tên người dùng:
         <Input
+          style={{ marginTop: "10px" }}
           type="text"
           value={tempUserData?.user_name || userData?.user_name}
           onChange={(e) => handleChange("user_name", e.target.value)}
         />
-      </label>
+      </div>
       <br />
-      <label>
+      <div>
         Email người dùng:
         <Input
+          disabled
+          style={{ marginTop: "10px" }}
           type="email"
           value={tempUserData?.user_email || userData?.user_email}
           onChange={(e) => handleChange("user_email", e.target.value)}
         />
-      </label>
+      </div>
       <br />
-      <label>
+      <div>
         Vai trò:
         <Input
+          disabled
+          style={{ marginTop: "10px" }}
           type="text"
           value={tempUserData?.user_role || userData?.user_role}
           onChange={(e) => handleChange("user_role", e.target.value)}
         />
-      </label>
+      </div>
       <br />
-      <label>
+      <div>
         Giới thiệu:
         <Input.TextArea
+          style={{ marginTop: "10px" }}
           value={tempUserData?.user_about || userData?.user_about}
           onChange={(e) => handleChange("user_about", e.target.value)}
         />
-      </label>
+      </div>
       <br />
       {userData?.user_role === "teacher" && (
         <div>
-          <label>
+          <div>
             Kinh nghiệm:
             {tempUserData?.user_experience?.map((experience, index) => (
               <div key={index}>
                 <Input
+                  style={{ marginTop: "10px" }}
                   type="text"
                   value={experience.company}
                   placeholder="Công ty"
@@ -182,6 +200,7 @@ export default function MyProfile() {
                   }
                 />
                 <Input
+                  style={{ marginTop: "10px" }}
                   type="text"
                   value={experience.title}
                   placeholder="Chức vụ"
@@ -190,6 +209,7 @@ export default function MyProfile() {
                   }
                 />
                 <Input
+                  style={{ marginTop: "10px" }}
                   type="text"
                   value={experience.description}
                   placeholder="Mô tả"
@@ -199,14 +219,22 @@ export default function MyProfile() {
                 />
               </div>
             ))}
-            <Button type="primary" onClick={handleAddExperience}>
+            <Button
+              style={{ margin: "10px 10px" }}
+              type="primary"
+              onClick={handleAddExperience}
+            >
               Thêm kinh nghiệm
             </Button>
-          </label>
+          </div>
           <br />
         </div>
       )}
-      <Button type="primary" onClick={handleUpdateInfo}>
+      <Button
+        type="primary"
+        onClick={handleUpdateInfo}
+        style={{ marginRight: "30px" }}
+      >
         Lưu
       </Button>
       <Button type="primary" onClick={() => setModalVisible(true)}>
