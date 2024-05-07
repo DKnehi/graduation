@@ -115,27 +115,35 @@ export default function () {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
-    setIsVisible(!isVisible); // Đảo ngược giá trị của isVisible
+    setIsVisible(!isVisible);
   };
 
-  const [activeButton, setActiveButton] = useState(1); // State để lưu trữ button đang được chọn
+  const [activeButton, setActiveButton] = useState(1);
 
-  const handleButtonClick = (buttonId) => {
-    setActiveButton(buttonId); // Đặt button được chọn là button với ID tương ứng
+  const handleButtonClick = (buttonId, url, id, isSeen) => {
+    setActiveButton(buttonId);
+    handleClick(url, id, isSeen);
   };
+
+  const getQuizz =()=>{
+    
+  }
+
   return (
     <div>
       <section className="lesson-section">
         <div className="lesson-section-headingbox-left">
           <div className="lesson-section-headingbox">
-            <h2 style={{ fontSize: '22px', fontWeight: '500' }}>Course Content</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: "500" }}>
+              Course Content
+            </h2>
           </div>
         </div>
         <div className="lesson-section-videobox">
           <div className="lesson-section-videobox-heading">
             <i class="fa-solid fa-chevron-left"></i>
             <h2>Test</h2>
-            <Collapse accordion>
+            {/* <Collapse accordion>
               {dataCourseLearn?.map((item) => (
                 <Panel
                   key={item?._id}
@@ -145,7 +153,7 @@ export default function () {
                   {openSections[item?._id] && (
                     <>
                       {/* video  */}
-                      {item?.course_data_video?.course_video.map((content) => (
+            {/* {item?.course_data_video?.course_video.map((content) => (
                         <div className="" key={content?._id}>
                           <Radio
                             defaultChecked={content?.isSeen}
@@ -170,94 +178,180 @@ export default function () {
                         </div>
                       ))}
                       {/* quiz */}
-                      {item?.course_data_quiz}
-                    </>
-                  )}
+            {/* {item?.course_data_quiz}
+                    </> */}
+            {/* )}
                 </Panel>
               ))}
-            </Collapse>
+            // </Collapse> */}
           </div>
           <div className="lesson-section-videobox-heading">
-            <h2 style={{ marginRight: '10px' }}>Your Progress: 2 of 4 (50%)</h2>
+            {/* <h2 style={{ marginRight: "10px" }}>Your Progress: 2 of 4 (50%)</h2> */}
             <i class="fa-solid fa-xmark"></i>
           </div>
         </div>
       </section>
 
+
       <section className="lesson-section-test">
-        <div style={{ backgroundColor: '#EFF1F6' }}>
-          <div className='lesson-test-content'>
-            <button onClick={toggleVisibility} style={{ borderBottom: '1px solid #CDCFD5', padding: '18px 15px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ fontSize: '18px', fontWeight: '500', color: '#677BA2' }}>Test 1</p>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <p>1/1</p>
-                <i class="fa-solid fa-chevron-right"></i>
-              </div>
-            </button>
-            <div className={isVisible ? 'content' : 'content hidden'}>
-              <button onClick={() => handleButtonClick(1)} style={{ borderBottom: '1px solid #CDCFD5', padding: '18px 15px', width: '100%', display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderRight: '1px solid #CDCFD5' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <i class="fa-solid fa-video"></i>
-                  <p style={{ fontSize: '14px', fontWeight: '500', color: 'black' }}>Video 1</p>
-                </div>
+        <div style={{ backgroundColor: "#EFF1F6" }}>
+          {dataCourseLearn?.map((item) => (
+            <div className="lesson-test-content">
+              <button
+                key={item?._id}
+                onClick={() => handleSectionClick(item?._id)}
+                style={{
+                  borderBottom: "1px solid #CDCFD5",
+                  padding: "18px 15px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "500",
+                    color: "#677BA2",
+                  }}
+                >
+                  {item?.courseData_title}
+                </p>
               </button>
-              <button onClick={() => handleButtonClick(2)} style={{ borderBottom: '1px solid #CDCFD5', padding: '18px 15px', width: '100%', display: 'flex', justifyContent: 'space-between', backgroundColor: 'white', borderRight: '1px solid #CDCFD5' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <i class="fa-solid fa-clipboard-question"></i>
-                  <p style={{ fontSize: '14px', fontWeight: '500', color: 'black' }}>Video 1</p>
+              {openSections[item?._id] && (
+                <div>
+                  {item?.course_data_video?.course_video.map((content) => (
+                    <button
+                      key={content?._id}
+                      onClick={() =>
+                        handleButtonClick(
+                          1,
+                          content?.video_url,
+                          content?._id,
+                          content?.isSeen
+                        )
+                      }
+                      style={{
+                        borderBottom: "1px solid #CDCFD5",
+                        padding: "18px 15px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        backgroundColor: "white",
+                        borderRight: "1px solid #CDCFD5",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <i class="fa-solid fa-video"></i>
+                        <p
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            color: "black",
+                          }}
+                        >
+                          {content?.video_title}
+                        </p>
+                      </div>
+                      <input
+                        type="radio"
+                        name=""
+                        checked={content?.isSeen}
+                        disabled
+                      />
+                    </button>
+                  ))}
+
+                  {item?.course_data_quiz?.map((content) => (
+                    <button
+                      key={content?._id}
+                      onClick={() => handleButtonClick(2)}
+                      style={{
+                        borderBottom: "1px solid #CDCFD5",
+                        padding: "18px 15px",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        backgroundColor: "white",
+                        borderRight: "1px solid #CDCFD5",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <i class="fa-solid fa-clipboard-question"></i>
+                        <p
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: "500",
+                            color: "black",
+                          }}
+                        >
+                          {content?.quiz_Tile}
+                        </p>
+                      </div>
+                    </button>
+                  ))}
                 </div>
-              </button>
+              )}
             </div>
-          </div>
+          ))}
         </div>
-        <div style={{gridColumn:'2/5'}}>
-          {activeButton === 1 && <Video></Video>}
+
+        <div style={{ gridColumn: "2/5" }}>
+          {activeButton === 1 && (
+            <Video url={urlVideo} handleProgress={handleProgress}></Video>
+          )}
           {activeButton === 2 && <Test></Test>}
         </div>
-        <div>
-          
-        </div>
+        <div></div>
       </section>
-
-
-
-
-
-
-
-
-
-
-      <div className="">
-        bình luận video
-        <div>
-          {data?.map((item) => (
-            <ReviewCard key={item._id} review={item} onReply={handleComment} />
-          ))}
-
-          {!showCommentInput ? (
-            <Button type="primary" onClick={() => setShowCommentInput(true)}>
-              đăng bình luận
-            </Button>
-          ) : (
-            <div>
-              <TextArea
-                rows={4}
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
+      {/* sửa bình luận dưới này là một box scroll */}
+      {idVideo && (
+        <div >
+          Bình luận của video
+          <div>
+            {data?.map((item) => (
+              <ReviewCard
+                key={item._id}
+                review={item}
+                onReply={handleComment}
               />
-              <Button
-                style={{ margin: "2rem 0" }}
-                type="primary"
-                onClick={handleCommentSubmit}
-              >
-                bình luận
+            ))}
+
+            {!showCommentInput ? (
+              <Button type="primary" onClick={() => setShowCommentInput(true)}>
+                đăng bình luận
               </Button>
-            </div>
-          )}
+            ) : (
+              <div>
+                <TextArea
+                  rows={4}
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+                <Button
+                  style={{ margin: "2rem 0" }}
+                  type="primary"
+                  onClick={handleCommentSubmit}
+                >
+                  bình luận
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
-
